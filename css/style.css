@@ -2141,14 +2141,14 @@ h4.package {
 
 /*-------------------------------------------------------------------
 
-	11. LINKTREE
+	10. LINKTREE
 
 -------------------------------------------------------------------*/
 
 .linktree-container {
 	z-index: 1;
 	opacity: 0.9;
-	margin-top: 20%;
+	margin-top: 10%;
 	text-align: center;
 	transition: all 0.5s;
 }
@@ -2160,7 +2160,7 @@ h4.package {
 	font-weight: 700;
 	line-height: 1;
 	color: #FFF;
-	margin-bottom: 80px;
+	margin-bottom: 40px;
 }
 
 .linktree-container .socials {
