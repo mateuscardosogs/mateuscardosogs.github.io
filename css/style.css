@@ -2852,7 +2852,9 @@ h4.package {
 }
 @media (max-width: 1024px){
 	.linktree {
-		display: none
+		top: auto;
+		bottom: 10;
+		left: 20px;
 	}
 }
 
