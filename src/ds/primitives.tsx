@@ -95,13 +95,11 @@ export function MetricStat({
   value,
   unit,
   label,
-  note,
   size = 'sm',
 }: {
   value: string;
   unit?: string;
   label: string;
-  note?: string;
   size?: 'sm' | 'md';
 }) {
   return (
@@ -111,7 +109,6 @@ export function MetricStat({
         {unit && <span className="mc-metric__unit">{unit}</span>}
       </div>
       <span className="mc-metric__label">{label}</span>
-      {note && <span className="mc-metric__note">{note}</span>}
     </div>
   );
 }
@@ -123,11 +120,16 @@ export function PrincipleBlock({
   title,
   body,
   evidence,
+  evidenceHref,
+  evidenceLinkText,
 }: {
   marker: string;
   title: string;
   body: string;
   evidence?: string;
+  /** Turns the tail of the evidence line into a link to the case that backs it. */
+  evidenceHref?: string;
+  evidenceLinkText?: string;
 }) {
   return (
     <div className="mc-principle">
@@ -135,7 +137,17 @@ export function PrincipleBlock({
       <div className="mc-principle__body">
         <h3 className="mc-principle__title">{title}</h3>
         <p className="mc-principle__text">{body}</p>
-        {evidence && <p className="mc-principle__evidence">{evidence}</p>}
+        {evidence && (
+          <p className="mc-principle__evidence">
+            {evidence}
+            {evidenceHref && evidenceLinkText && (
+              <>
+                {' '}
+                <a href={evidenceHref}>{evidenceLinkText}</a>.
+              </>
+            )}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -147,13 +159,13 @@ export function TimelineItem({
   period,
   role,
   org,
-  bullets = [],
+  body,
   current = false,
 }: {
   period: string;
   role: string;
   org?: string;
-  bullets?: string[];
+  body?: string;
   current?: boolean;
 }) {
   return (
@@ -167,11 +179,7 @@ export function TimelineItem({
           <span className="mc-timeline-item__role">{role}</span>
           {org && <span className="mc-timeline-item__org">{org}</span>}
         </div>
-        {bullets.map((b) => (
-          <p key={b} className="mc-timeline-item__bullet">
-            {b}
-          </p>
-        ))}
+        {body && <p className="mc-timeline-item__bullet">{body}</p>}
       </div>
     </div>
   );

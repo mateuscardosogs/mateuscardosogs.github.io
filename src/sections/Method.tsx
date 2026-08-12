@@ -1,12 +1,13 @@
 import type { SiteContent } from '../content/types';
 import { FlowDiagram, Reveal } from '../ds/motion';
 import { PrincipleBlock, Section, SectionHeader } from '../ds/primitives';
+import { casePath } from '../routes';
 
 export function Method({ content }: { content: SiteContent }) {
   const { method } = content;
   return (
     <Section id="method" tone="inverse">
-      <SectionHeader index={method.index} eyebrow={method.eyebrow} title={method.title} />
+      <SectionHeader index={method.index} eyebrow={method.eyebrow} title={method.title} lead={method.lead} />
 
       <div className="mc-method__loop">
         <div className="eyebrow mc-method__loop-label">{method.loopLabel}</div>
@@ -16,7 +17,14 @@ export function Method({ content }: { content: SiteContent }) {
       <div>
         {method.principles.map((p, i) => (
           <Reveal key={p.marker} delay={i * 60}>
-            <PrincipleBlock {...p} />
+            <PrincipleBlock
+              marker={p.marker}
+              title={p.title}
+              body={p.body}
+              evidence={p.evidence}
+              evidenceHref={p.evidenceLink && casePath(content.lang, p.evidenceLink.caseId)}
+              evidenceLinkText={p.evidenceLink?.text}
+            />
           </Reveal>
         ))}
       </div>

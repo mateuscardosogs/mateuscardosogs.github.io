@@ -1,19 +1,18 @@
 import type { SiteContent } from './types';
 
 /**
- * English is the primary channel: remote foreign companies read this one.
- * Copy follows the design system's content rules — first person singular,
- * show don't tell, numbers before prose, sentence case, no emoji, no client
- * names. Every claim here traces back to the consolidated content base.
+ * English is the primary channel and the authored original — this copy is
+ * transcribed from Mateus's own text sprint, not translated from Portuguese.
+ * British spelling throughout (optimised, prioritisation, summarised).
  */
 export const en: SiteContent = {
   lang: 'en',
   htmlLang: 'en',
 
   meta: {
-    title: 'Mateus Cardoso — Senior full-stack engineer',
+    title: 'Mateus Cardoso — Senior full-stack developer',
     description:
-      "I take products end to end: business rules, architecture, direct client conversation and AI as a verified process. 40k+ offers an hour on 100+ marketplaces, −30% routing cost, −73% support tickets.",
+      'Writing code stopped being the differentiator. What makes the difference is understanding the business behind it. 40k+ offers an hour across 100+ marketplaces, −30% in routing cost, −73% fewer support tickets.',
     siteName: 'Mateus Cardoso',
   },
 
@@ -33,49 +32,47 @@ export const en: SiteContent = {
   },
 
   hero: {
-    eyebrow: 'Senior full-stack engineer · MCode Studio Labs',
-    titleBefore: "I'm not hired to write code. I'm hired to decide ",
-    titleHighlight: 'what to build',
-    titleAfter: ' and why.',
-    lead: 'I take products end to end: I understand the business rules, choose the architecture that fits them, talk to the client directly, and use AI as a controlled process.',
-    ctaClient: 'Hire me for a project',
-    ctaRecruiter: "I'm recruiting",
-    tags: ['Business rules', 'Architecture under constraint', 'Direct communication', 'Verifiable AI'],
+    eyebrow: 'Senior full-stack developer',
+    titleBefore: 'Writing code stopped being the differentiator. What makes the difference is ',
+    titleHighlight: 'understanding the business behind it',
+    titleAfter: '.',
+    lead: 'I look at a project from both sides: the business rule, the user, how the client reads the result. And I build it with an optimised workflow — process, structure and AI as part of it.',
+    ctaPrimary: 'Get in touch',
+    ctaSecondary: 'See the cases',
+    stack: [
+      'Ruby on Rails',
+      'NestJS',
+      'Hono',
+      'Next.js',
+      'React Native',
+      'Vite',
+      'Python',
+      'PostgreSQL',
+      'Turborepo',
+    ],
   },
 
   proof: {
     label: '01 / Quick proof',
     items: [
-      { value: '−73%', label: 'support tickets, through an AI pipeline' },
-      { value: '−30%', label: 'travel cost across 70+ field routes' },
-      {
-        value: '40k+',
-        unit: 'offers/h',
-        label: 'across 100+ marketplaces, on 150+ Kubernetes pods',
-      },
-      {
-        value: '2,000+',
-        label: 'paying users on a product I built',
-        note: "partner's product · unnamed under NDA",
-      },
-      {
-        value: '200',
-        label: 'sign-ups for Apex with zero marketing',
-        note: 'validated demand, not a paying base',
-      },
+      { value: '−73%', label: 'fewer support tickets after the AI pipeline I built' },
+      { value: '−30%', label: 'in travel cost across 70+ field routes after the routing work' },
+      { value: '40k+', label: 'offers monitored per hour across 100+ marketplaces' },
+      { value: '2,000+', label: 'paying users on a product I helped build' },
+      { value: '200', label: 'people on the waitlist of a product of my own, before any marketing' },
     ],
   },
 
   cases: {
     index: '02',
     eyebrow: 'Cases',
-    title: 'Told through the decision, not the stack',
-    lead: 'Context, decision, a named trade-off, and the number at the end. Clients are never named — restricted work is described by architecture and magnitude.',
+    title: 'Told by the decision, not by the stack',
+    lead: 'Each case follows the same shape: context, my role, the decision, the trade-off it carried, and the outcome. Clients are not named — restricted work is described by architecture and scale.',
     readMore: 'Read the full case →',
     detail: {
       back: '← back',
       context: 'Context',
-      role: 'My role',
+      role: 'Role',
       decision: 'Decision',
       tradeoff: 'Trade-off',
       outcome: 'Outcome',
@@ -86,18 +83,18 @@ export const en: SiteContent = {
     items: [
       {
         id: 'scraping',
-        index: 'Case 01',
+        index: 'Case 01 · Price monitoring',
         result: '40k+ offers / hour',
-        title: 'Forty thousand offers an hour across 100+ marketplaces, without getting blocked',
+        title: 'Collecting 40k offers an hour across 100+ marketplaces, with proof attached',
         context:
-          'Monitor price offers for a brand and its competitors across many marketplaces, 24/7. The hard rule was the window: the entire universe of offers had to be collected inside one hour — it opens at :00, closes by :59, and starts over.',
-        role: 'I owned the architecture, the infrastructure and the operation, and I answered for the number in front of the client.',
+          "The product monitors price offers — the brand's and its competitors' — across many marketplaces, 24/7. The hard rule came from the business side: the whole universe of offers has to be collected inside a one-hour window that starts at :00 and closes at :59.",
+        role: 'I designed and run the collection end to end, from the architecture to keeping it healthy in production.',
         decision:
-          'Scale horizontally on Kubernetes — 150+ pods on 100 GB+ machines — instead of collecting serially. A proof screenshot per collection, so the client can audit any single data point. An anti-detection layer so the crawlers are not blocked as bots.',
+          'A serial crawler could never fit that window, so the collection scales horizontally on Kubernetes — 100 GB+ machines, 150+ pods. Each collection stores a screenshot as evidence, which is what lets the client audit any offer, and an anti-detection layer keeps the crawlers from being blocked as bots.',
         tradeoff:
-          'High infrastructure cost and permanent complexity in keeping the anti-bot evasion alive. Paid deliberately: without it there is no one-hour window and no proof, and those two are the product.',
+          'It costs more infrastructure and permanent maintenance of the anti-bot evasion. That is a cost I chose knowingly, because the window and the proof are what the client is actually buying.',
         outcome:
-          '40,000+ offers monitored across 100+ marketplaces, collected in full 24/7 inside the hourly window, with visual proof attached to every offer.',
+          '40k+ offers monitored across 100+ marketplaces, complete inside the hourly window, with visual proof per offer.',
         tags: ['Kubernetes', 'Anti-bot', 'Auditability'],
         flow: [
           { label: 'scheduler' },
@@ -108,17 +105,17 @@ export const en: SiteContent = {
       },
       {
         id: 'routing',
-        index: 'Case 02',
-        result: '−30% travel cost',
-        title: 'Thirty per cent off the travel cost of 70+ field routes',
+        index: 'Case 02 · Field routing',
+        result: '−30%',
+        title: '−30% in travel cost across 70+ field routes',
         context:
-          '70+ routes across Brazil, walked by people who visit stores to run audits. They had to be optimised under real field constraints, not on a clean map.',
-        role: 'I modelled the problem, chose the solver, tuned the constraints and validated the result against the money actually spent.',
+          '70+ routes across Brazil, walked by people who visit stores to audit them. The routes had to be optimised without ignoring what field work really looks like.',
+        role: 'Modelling the problem with the operations team, choosing the solver and connecting it to the real cost of travel.',
         decision:
-          'Model it as a VRPTW — vehicle routing with time windows — on Google OR-Tools, in the pre-LLM era. Adapted with penalties, per-coordinate visit priority and capacity: working hours, lunch, start and end store, trip home. Public transport cost came from Google APIs per city; where there was no data, average fare by postcode — so a route is validated economically, not only geographically.',
+          'The problem is a VRPTW, so I modelled it with Google OR-Tools (this was before LLMs), adding penalties, visit priority by coordinate and real capacity limits: working hours, lunch, first and last store, the trip home. Public transport cost came from Google APIs per city, and where there was no data, from the average fare by postal code — so a route could be checked for economic sense, not only geographic sense.',
         tradeoff:
-          'A classical model means hand-modelling every constraint, one at a time. I chose it for parameter flexibility, not for speed of implementation.',
-        outcome: '−30% in real travel cost compared with what was being spent before.',
+          'A classic solver means modelling every constraint by hand, which is slower to build. I took that on because the flexibility to tune each parameter mattered more than getting there fast.',
+        outcome: '−30% in real travel cost compared to what was being spent before.',
         tags: ['OR-Tools', 'VRPTW', 'Google APIs'],
         flow: [
           { label: 'constraints' },
@@ -129,19 +126,18 @@ export const en: SiteContent = {
       },
       {
         id: 'apex',
-        index: 'Case 03',
-        result: '200 sign-ups, zero marketing',
-        title: 'Apex: a multi-sport app with AI coaching, run end to end by one person',
+        index: 'Case 03 · Apex · Product of my own',
+        result: '200 on the waitlist',
+        title: 'A product built inside a domain I live in, with 200 people waiting before any marketing',
         context:
-          'The sports app market is fragmented by discipline — one app per sport. The product thesis is to unify multi-sport training with AI coaching in a single place. I train across those sports myself, so I am the user.',
-        role: 'Everything: product, back end, front end, AI orchestration, and the marketing pipeline that sells it.',
+          'Training apps are fragmented by sport. Apex is my attempt to bring multi-sport training and AI coaching into one place. I train — running, strength, trail, conditioning — so I am the user, which removes most of the ramp-up in understanding the domain.',
+        role: 'Everything: product, back end, front end in Vite, AI orchestration with context optimisation, infrastructure and go-to-market.',
         decision:
-          'Run it solo end to end and automate marketing and sales inside the same flow: automatic blog generation with real sources rather than generic filler, Instagram, and the SEO structure of the landing page — the blog exists to rank.',
+          'Marketing is treated as part of the product: automated blog content with real sources, social output and an SEO structure built to rank. On the infrastructure side I leaned on managed services — Fly.io and Vercel for hosting, AWS workers, Trigger.dev for background jobs, Supabase for auth, Stripe for payments — so one person could carry the whole thing.',
         tradeoff:
-          'Enormous scope for one person. The bet is heavy automation to make solo viable, at the cost of owning and maintaining those pipelines forever.',
-        outcome: '~200 people on the interest list with no marketing spend at all. Launch is imminent.',
-        caveat: 'That is validated demand, not an active paying base — it becomes a strong number at launch.',
-        tags: ['Own product', 'AI', 'Vite'],
+          'The scope is large for one person, and leaning on automation means also maintaining those pipelines. In exchange I get to learn each of those services deeply, which comes back into the work I do for others.',
+        outcome: '~200 people on the interest list with no marketing spend. Launch is close.',
+        tags: ['Product of my own', 'AI', 'Vite'],
         flow: [
           { label: 'training' },
           { label: 'athlete context' },
@@ -153,42 +149,43 @@ export const en: SiteContent = {
 
   method: {
     index: '03',
-    eyebrow: 'How I work',
-    title: 'A method with proof — every principle points at a case',
+    eyebrow: 'Method',
+    title: "The part of the work that isn't code",
+    lead: 'Building is the last step. Most of what determines whether a project works happens before and around it — and each principle below points at something I actually did.',
     loopLabel: 'Verifiable AI loop',
     loop: [
       { label: 'context' },
       { label: 'plan' },
       { label: 'verifiable units' },
-      { label: 'review', sub: "I'm the gate", accent: true },
+      { label: 'review', sub: 'final check is mine', accent: true },
     ],
     principles: [
       {
         marker: '01',
-        title: 'AI as a verified process',
-        body: 'Context before the prompt, decomposition into verifiable units, parallel workflows and a review loop. Generated code has to respect the architecture and the conventions set at the start, and documentation is the point of truth for the flow.',
+        title: 'AI as a process I can verify',
+        body: 'Context comes before the prompt, work is broken into units that can be checked, and review happens in a loop. Generated code follows the architecture and the standards agreed at the start, and documentation is the point of truth for the flow. The final review is mine.',
         evidence:
-          'A support pipeline that cut 73% of tickets: user question → AI reads the context → checks the documentation → resolves it, or opens a ticket already summarised for me.',
+          'Support pipeline that cut tickets by 73%: user question → AI reads the context → checks the documentation → resolves it, or opens a ticket already summarised for me.',
       },
       {
         marker: '02',
-        title: 'Communication that closes contracts',
-        body: 'I translate a technical decision into impact: cost, deadline, risk. I stepped into the sales channel as the presenter, on top of the engineering, because the tool was too complex for a salesperson to demo alone.',
+        title: 'Talking to people who are not developers',
+        body: 'A technical decision only means something when it is translated into cost, deadline and risk. At one point the product was too complex for the sales team to present on its own, so I joined the calls as the person who explains it.',
         evidence:
-          'Presenting directly to the board unlocked large contracts with leading electronics and retail brands.',
+          'Showing the flow in non-technical terms to leadership helped unlock large contracts with leading electronics and retail brands.',
       },
       {
         marker: '03',
-        title: 'Architecture under the constraint of the problem',
-        body: 'I pick the tool for the constraint, not for the trend. Scale, dependencies, cost and trade-off get decided before the first line of code.',
-        evidence: 'OR-Tools on the routing VRPTW — parameter flexibility chosen over raw speed.',
+        title: 'Architecture chosen by the constraint',
+        body: 'Scale, dependencies, cost and trade-off come before the stack. Knowing many tools is useful mostly because it makes the choice possible.',
+        evidence: 'OR-Tools on the routing VRPTW —',
+        evidenceLink: { text: 'see case 02', caseId: 'routing' },
       },
       {
         marker: '04',
-        title: 'Self-taught, with a home lab',
-        body: 'I architect and operate my own self-hosted infrastructure: Proxmox, TrueNAS, UniFi, 10GbE, RAID 10, Home Assistant, UPS. It is the test bench for the infrastructure decisions I make at work.',
-        evidence:
-          'I learn a domain from zero: I built a quadcopter from Chinese parts at 13, before ready-made drones existed.',
+        title: 'I run the infrastructure I design',
+        body: 'I like infrastructure and networking enough to keep my own self-hosted setup running. Operating it keeps my architectural decisions anchored in what actually has to be maintained.',
+        evidence: 'Proxmox · TrueNAS · UniFi · 10GbE · RAID 10 · Home Assistant · Arduino · UPS',
       },
     ],
   },
@@ -198,56 +195,37 @@ export const en: SiteContent = {
     eyebrow: 'About',
     title: 'Context, not biography',
     paragraphs: [
-      'I am a senior full-stack engineer and a partner at Tracking Trade, and I run MCode Studio Labs — my own studio, where Apex (multi-sport training with AI coaching) and Pricetrack (price monitoring) come from.',
-      'I run, lift and hike — I am the user of Apex, so I understand the end user with no ramp-up time. Outside the product, I operate a self-hosted home lab that doubles as the test bench for the infrastructure decisions I make at work.',
-    ],
-    stack: [
-      'Next.js',
-      'React',
-      'React Native',
-      'NestJS',
-      'Python',
-      'PostgreSQL',
-      'Kubernetes',
-      'Supabase',
-      'Trigger.dev',
+      'I am a senior full-stack developer. I joined my current company as an intern and moved through every level it has, which today means I am involved beyond development: product structuring, planning, prioritisation and conversations with clients and end users.',
+      'Alongside that work I build products of my own, always in areas I already know from the inside. Sport is the clearest example: I train, I study it, and Apex came out of using what I already understand as a practitioner to build something useful for other people.',
+      'I have been self-taught since I was a kid. I started studying quadcopters when there was nothing ready to buy, then networks, then servers — I built my own network and my own home server because I wanted to understand how they work, not because a job asked for it.',
+      'That habit keeps paying off in work that is not strictly development. Infrastructure is the clearest case: from the self-hosted setup at home to Fly.io, Vercel and AWS workers on my own projects, each thing I set up becomes something I can bring to the next problem.',
     ],
   },
 
   experience: {
     index: '05',
     eyebrow: 'Experience',
-    title: 'Factual track record',
-    educationLabel: 'Education',
-    education:
-      "Bachelor's in Information Systems (UFPE) · Technical degree in Computer Networks (ETEMAC)",
+    title: 'Where the work happened',
     entries: [
       {
-        period: 'mar 2020 — present',
-        role: 'Software Engineer / Partner',
-        org: 'Tracking Trade',
+        period: 'in parallel',
+        role: 'Products of my own',
+        org: 'Apex',
         current: true,
-        bullets: [
-          'Architected the collection of 40,000+ offers per hour across 100+ marketplaces on 150+ Kubernetes pods, with anti-bot evasion and screenshot proof.',
-          'Modelled field routing as a VRPTW on Google OR-Tools for 70+ routes, cutting 30% of the real travel cost.',
-        ],
+        body: 'Apex is a multi-sport training product with AI coaching, built in a domain I practise myself. Carrying it alone meant learning the surrounding pieces properly: hosting on Fly.io and Vercel, workers on AWS, background jobs on Trigger.dev, Supabase for fast auth and Postgres, Stripe for payments, transactional email, and analytics to follow what people actually do. Each of those comes back into the work I do for clients.',
       },
       {
-        period: '2023 — present',
-        role: 'Founder',
-        org: 'MCode Studio Labs',
-        bullets: [
-          'Apex: a multi-sport app with AI coaching, run end to end — 200 sign-ups before launch, with no marketing.',
-          'An AI support pipeline that cut 73% of tickets.',
-        ],
+        period: 'mar 2020 — now',
+        role: 'Software engineer',
+        org: 'Tracking Trade',
+        current: true,
+        body: 'I work across several products at once, which pushed a lot of structural work: consolidating services into a monorepo, standardising how new projects start, and automating parts of the operation that used to depend on someone being available. Price monitoring and field routing are the two largest pieces, and I also built the support pipeline that reads context and documentation before a ticket ever reaches a person.',
       },
       {
         period: 'jul 2018 — feb 2020',
-        role: 'Full Stack Developer',
+        role: 'Full stack',
         org: 'Tracking Trade',
-        bullets: [
-          'Led the AngularJS → React and Ionic → React Native migrations, alongside microservices and market-facing features.',
-        ],
+        body: 'The internship went well enough that I was moved to a full-stack position in a short period. From there I took part in most of the product front: the migration from AngularJS to React and from Ionic to React Native, plus new products and market features.',
       },
       {
         period: 'apr — jun 2018',
@@ -255,20 +233,41 @@ export const en: SiteContent = {
         org: 'Tracking Trade',
       },
     ],
+    columns: [
+      {
+        label: 'Product and web',
+        value: 'Next.js · React · React Native · Expo · Vite · tRPC · Drizzle',
+      },
+      {
+        label: 'Back end and data',
+        value: 'Ruby on Rails · NestJS · Hono · Python · PostgreSQL · Supabase · Trigger.dev',
+      },
+      {
+        label: 'Infrastructure and services',
+        value:
+          'Kubernetes · Fly.io · Vercel · AWS · Google Cloud · Stripe · self-hosted: Proxmox, TrueNAS, UniFi',
+      },
+      {
+        label: 'Education',
+        value:
+          'BSc in Information Systems (UFPE) · Technical degree in Computer Networks (ETEMAC)',
+      },
+    ],
   },
 
   contact: {
     index: '06',
     eyebrow: 'Contact',
-    title: 'Two paths, zero friction',
-    lead: 'If you are hiring for a project, tell me the business problem. If you are recruiting, the CV carries the same numbers as this page.',
-    cvButton: 'Read the CV',
+    title: 'Tell me the problem first',
+    lead: 'Whether you are hiring for a role or looking for someone to build something, the useful starting point is the same: what needs to be solved. The CV in PDF carries the same numbers as this page.',
+    cvLink: 'download CV (PDF)',
+    availability: 'open to remote roles and to project work',
     formName: 'Name',
-    formNamePlaceholder: 'What should I call you?',
-    formEmail: 'Email',
+    formEmail: 'E-mail',
     formEmailPlaceholder: 'you@company.com',
+    formReason: 'Reason for contact',
+    reasonOptions: ['a project to build', 'a role to fill', 'something else'],
     formMessage: 'Context',
-    formMessagePlaceholder: 'What business problem do you need solved?',
     submit: 'Send',
     sending: 'Sending…',
     sentLabel: 'Received',
@@ -276,15 +275,12 @@ export const en: SiteContent = {
     sendAnother: 'Send another',
     errorLabel: 'Not sent',
     errorBody: 'Something broke on the way. Write to me directly at contato@mateuscardosogs.com.',
-    directLabel: 'Or go direct',
     required: 'Required.',
-    invalidEmail: 'Check the email address.',
+    invalidEmail: 'Check the e-mail address.',
   },
 
   footer: {
-    tagline: 'Product end to end: the decision, the architecture, the client and the metric.',
-    note: 'MCode Studio Labs · clients under NDA are described by architecture and magnitude, never by name.',
-    cvLink: 'cv',
+    cvLink: 'cv.pdf',
   },
 
   notFound: {
@@ -295,68 +291,68 @@ export const en: SiteContent = {
 
   cv: {
     title: 'Mateus Cardoso — CV',
-    description: 'One-column, ATS-safe CV of Mateus Cardoso, senior full-stack engineer.',
-    role: 'Software Engineer · Senior full-stack',
+    description: 'One-column, ATS-safe CV of Mateus Cardoso, senior full-stack developer.',
+    role: 'Senior full-stack developer',
     location: 'Recife, Brazil · remote (BR / EU / US)',
     summaryLabel: 'Summary',
     summary:
-      'Senior full-stack software engineer and partner, with my own products in operation. I translate business rules into architecture, talk directly to clients and boards, and use AI as a verified process — with review and conventions, not as a loose generator. I own the decision, the code and the metric after launch.',
+      'Senior full-stack developer. Writing code stopped being the differentiator; what makes the difference is understanding the business behind it. I look at a project from both sides — the business rule, the user, how the client reads the result — and I build it with an optimised workflow, with process, structure and AI as part of it. I also run products of my own, and the infrastructure behind them.',
     experienceLabel: 'Experience',
     jobs: [
       {
-        role: 'Software Engineer / Partner',
+        role: 'Software engineer',
         org: 'Tracking Trade',
-        period: 'mar 2020 — present',
+        period: 'mar 2020 — now',
         bullets: [
-          'Architected the collection of 40,000+ offers per hour across 100+ marketplaces on 150+ Kubernetes pods, with anti-bot evasion and screenshot proof.',
-          'Modelled routing for 70+ field routes as a VRPTW on Google OR-Tools, with penalties and working-hour capacity — 30% reduction in real travel cost.',
-          'Built an AI support pipeline (context → documentation → resolution or summarised ticket) that cut 73% of tickets.',
-          'Presented the tool directly to the boards of leading electronics and retail brands, unlocking large contracts.',
+          'Designed and run price collection of 40k+ offers per hour across 100+ marketplaces on 150+ Kubernetes pods, with anti-bot evasion and a screenshot stored as evidence per collection.',
+          'Modelled field routing for 70+ routes as a VRPTW on Google OR-Tools, with penalties, visit priority by coordinate and real capacity limits — 30% reduction in real travel cost.',
+          'Built the AI support pipeline that reads context and documentation before a ticket reaches a person, cutting tickets by 73%.',
+          'Consolidated services into a monorepo and standardised how new projects start, automating parts of the operation that depended on someone being available.',
+          'Joined sales calls as the person who explains the product in non-technical terms, which helped unlock large contracts with leading electronics and retail brands.',
         ],
       },
       {
-        role: 'Founder',
-        org: 'MCode Studio Labs',
-        period: '2023 — present',
+        role: 'Products of my own · Apex',
+        org: 'In parallel',
+        period: 'in parallel',
         bullets: [
-          'Apex — a multi-sport app with AI coaching, run end to end: product, back end, Vite front end and AI orchestration. 200 sign-ups before launch, with no paid marketing.',
-          'Marketing automation inside the product flow: blog generation with real sources, Instagram, and the SEO structure of the landing page.',
-          'Pricetrack — price monitoring and scraping at scale (under Tracking Trade).',
+          'Multi-sport training product with AI coaching, carried end to end: product, back end, front end in Vite, AI orchestration with context optimisation, infrastructure and go-to-market.',
+          'Marketing treated as part of the product: automated blog content with real sources, social output and an SEO structure built to rank.',
+          'Managed services chosen so one person could carry it: Fly.io and Vercel for hosting, AWS workers, Trigger.dev for background jobs, Supabase for auth and Postgres, Stripe for payments.',
+          '~200 people on the waitlist with no marketing spend.',
         ],
       },
       {
-        role: 'Full Stack Developer',
+        role: 'Full stack',
         org: 'Tracking Trade',
         period: 'jul 2018 — feb 2020',
         bullets: [
-          'Led the AngularJS → React and Ionic → React Native migrations.',
-          'Built products, microservices and market-facing features from zero to operation.',
+          'Moved from intern to a full-stack position in a short period.',
+          'Took part in most of the product front: the migration from AngularJS to React and from Ionic to React Native, plus new products and market features.',
         ],
       },
       {
-        role: 'Development Intern',
+        role: 'Intern',
         org: 'Tracking Trade',
         period: 'apr — jun 2018',
       },
     ],
     skillsLabel: 'Skills',
     skills: [
-      { label: 'Languages', value: 'TypeScript, JavaScript, Python, Ruby' },
-      { label: 'Front end', value: 'React, Next.js, React Native, Expo, Vite' },
+      { label: 'Product and web', value: 'Next.js, React, React Native, Expo, Vite, tRPC, Drizzle' },
       {
-        label: 'Back end',
-        value: 'NestJS, tRPC, Trigger.dev, Ruby on Rails, PostgreSQL, Drizzle, Supabase',
+        label: 'Back end and data',
+        value: 'Ruby on Rails, NestJS, Hono, Python, PostgreSQL, Supabase, Trigger.dev',
       },
-      { label: 'Infrastructure', value: 'Kubernetes, Docker, Proxmox, TrueNAS, UniFi, self-hosted' },
       {
-        label: 'Method',
+        label: 'Infrastructure',
         value:
-          'Architecture under constraint, optimisation (OR-Tools / VRPTW), AI as a verified process, client communication',
+          'Kubernetes, Fly.io, Vercel, AWS, Google Cloud, Stripe, self-hosted: Proxmox, TrueNAS, UniFi',
       },
     ],
     educationLabel: 'Education',
     education: [
-      "Bachelor's in Information Systems — UFPE",
+      'BSc in Information Systems — UFPE',
       'Technical degree in Computer Networks — ETEMAC',
     ],
     printLabel: 'Print / save as PDF',

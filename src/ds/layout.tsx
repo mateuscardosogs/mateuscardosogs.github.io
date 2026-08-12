@@ -114,22 +114,11 @@ export function NavBar({
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 
-export function Footer({
-  tagline,
-  note,
-  links,
-}: {
-  tagline: string;
-  note: string;
-  links: { label: string; href: string; external?: boolean }[];
-}) {
+export function Footer({ links }: { links: { label: string; href: string; external?: boolean }[] }) {
   return (
     <footer className="mc-footer">
       <div className="mc-footer__row">
-        <div className="mc-footer__brand">
-          <span className="mc-footer__name">Mateus Cardoso</span>
-          <span className="mc-footer__tagline">{tagline}</span>
-        </div>
+        <span className="mc-footer__name">Mateus Cardoso</span>
         <div className="mc-footer__links">
           {links.map((l) => (
             <a
@@ -142,7 +131,6 @@ export function Footer({
           ))}
         </div>
       </div>
-      <div className="mc-footer__note">{note}</div>
     </footer>
   );
 }

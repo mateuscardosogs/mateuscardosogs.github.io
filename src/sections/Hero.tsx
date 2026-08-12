@@ -1,7 +1,6 @@
 import type { SiteContent } from '../content/types';
 import { Button } from '../ds/Button';
 import { GeoField } from '../ds/motion';
-import { TagList } from '../ds/primitives';
 
 export function Hero({ content }: { content: SiteContent }) {
   const { hero } = content;
@@ -22,19 +21,17 @@ export function Hero({ content }: { content: SiteContent }) {
 
         <p className="mc-hero__lead">{hero.lead}</p>
 
-        {/* The two audiences fork here: client on the left, recruiter on the right. */}
         <div className="mc-hero__ctas">
           <Button variant="signal" size="lg" href="#contact">
-            {hero.ctaClient}
+            {hero.ctaPrimary}
           </Button>
-          <Button variant="secondary" size="lg" href="#experience">
-            {hero.ctaRecruiter}
+          <Button variant="secondary" size="lg" href="#cases">
+            {hero.ctaSecondary}
           </Button>
         </div>
 
-        <div className="mc-hero__tags">
-          <TagList items={hero.tags} />
-        </div>
+        {/* Repertoire, not a skill list: mono, dimmed, one line, no chips. */}
+        <p className="mc-hero__stack">{hero.stack.join(' · ')}</p>
       </div>
     </section>
   );

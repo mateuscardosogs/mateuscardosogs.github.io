@@ -28,12 +28,9 @@ export function Shell({
       <NavBar content={content} alternates={alternates} sectionLinks={sectionLinks} />
       <main id="main">{children}</main>
       <Footer
-        tagline={content.footer.tagline}
-        note={content.footer.note}
         links={[
           { label: 'github', href: SITE.github, external: true },
           { label: 'linkedin', href: SITE.linkedin, external: true },
-          { label: 'email', href: `mailto:${SITE.email}` },
           { label: content.footer.cvLink, href: cvPath(content.lang) },
         ]}
       />

@@ -9,6 +9,7 @@ export interface FlowNode {
 export interface CaseItem {
   /** Stable slug — identical across languages, so /cases/<id>/ and /pt/cases/<id>/ pair up. */
   id: string;
+  /** Mono kicker, e.g. "CASE 01 · PRICE MONITORING". */
   index: string;
   result: string;
   title: string;
@@ -17,8 +18,6 @@ export interface CaseItem {
   decision: string;
   tradeoff: string;
   outcome: string;
-  /** Calibrated honesty note: printed under the outcome when the number needs a caveat. */
-  caveat?: string;
   tags: string[];
   flow: FlowNode[];
 }
@@ -27,7 +26,6 @@ export interface ProofItem {
   value: string;
   unit?: string;
   label: string;
-  note?: string;
 }
 
 export interface Principle {
@@ -35,6 +33,8 @@ export interface Principle {
   title: string;
   body: string;
   evidence: string;
+  /** Appended to the evidence line as a link into the case that backs it. */
+  evidenceLink?: { text: string; caseId: string };
 }
 
 export interface TimelineEntry {
@@ -42,7 +42,12 @@ export interface TimelineEntry {
   role: string;
   org: string;
   current?: boolean;
-  bullets?: string[];
+  body?: string;
+}
+
+export interface LabelledList {
+  label: string;
+  value: string;
 }
 
 export interface CvJob {
@@ -61,7 +66,7 @@ export interface CvContent {
   experienceLabel: string;
   jobs: CvJob[];
   skillsLabel: string;
-  skills: { label: string; value: string }[];
+  skills: LabelledList[];
   educationLabel: string;
   education: string[];
   printLabel: string;
@@ -91,9 +96,10 @@ export interface SiteContent {
     titleHighlight: string;
     titleAfter: string;
     lead: string;
-    ctaClient: string;
-    ctaRecruiter: string;
-    tags: string[];
+    ctaPrimary: string;
+    ctaSecondary: string;
+    /** Mono strip under the CTAs — repertoire, not a skill list. */
+    stack: string[];
   };
   proof: {
     label: string;
@@ -122,6 +128,7 @@ export interface SiteContent {
     index: string;
     eyebrow: string;
     title: string;
+    lead: string;
     loopLabel: string;
     loop: FlowNode[];
     principles: Principle[];
@@ -131,28 +138,28 @@ export interface SiteContent {
     eyebrow: string;
     title: string;
     paragraphs: string[];
-    stack: string[];
   };
   experience: {
     index: string;
     eyebrow: string;
     title: string;
     entries: TimelineEntry[];
-    educationLabel: string;
-    education: string;
+    /** Skill groups plus education, as the closing grid of the section. */
+    columns: LabelledList[];
   };
   contact: {
     index: string;
     eyebrow: string;
     title: string;
     lead: string;
-    cvButton: string;
+    cvLink: string;
+    availability: string;
     formName: string;
-    formNamePlaceholder: string;
     formEmail: string;
     formEmailPlaceholder: string;
+    formReason: string;
+    reasonOptions: string[];
     formMessage: string;
-    formMessagePlaceholder: string;
     submit: string;
     sending: string;
     sentLabel: string;
@@ -160,13 +167,10 @@ export interface SiteContent {
     sendAnother: string;
     errorLabel: string;
     errorBody: string;
-    directLabel: string;
     required: string;
     invalidEmail: string;
   };
   footer: {
-    tagline: string;
-    note: string;
     cvLink: string;
   };
   notFound: {

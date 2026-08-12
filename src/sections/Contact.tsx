@@ -1,11 +1,11 @@
-import { useState, type FormEvent } from 'react';
+import { useId, useState, type FormEvent } from 'react';
 import type { SiteContent } from '../content/types';
 import { Button } from '../ds/Button';
 import { Input, Textarea } from '../ds/fields';
 import { Card } from '../ds/layout';
 import { Section, SectionHeader } from '../ds/primitives';
-import { cvPath } from '../routes';
-import { SITE, whatsappUrl } from '../site';
+import { cvPdfPath } from '../routes';
+import { SITE } from '../site';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -18,8 +18,8 @@ interface Errors {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /** Last-resort path: no access key configured, or the network refused. */
-function mailtoFallback(name: string, email: string, message: string) {
-  const body = `${message}\n\n— ${name} (${email})`;
+function mailtoFallback(name: string, email: string, reason: string, message: string) {
+  const body = `${message}\n\n(${reason})\n\n— ${name} (${email})`;
   window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
     `Site contact — ${name}`,
   )}&body=${encodeURIComponent(body)}`;
@@ -27,8 +27,10 @@ function mailtoFallback(name: string, email: string, message: string) {
 
 export function Contact({ content }: { content: SiteContent }) {
   const t = content.contact;
+  const reasonId = useId();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [reason, setReason] = useState(t.reasonOptions[0]);
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
@@ -36,6 +38,7 @@ export function Contact({ content }: { content: SiteContent }) {
   const reset = () => {
     setName('');
     setEmail('');
+    setReason(t.reasonOptions[0]);
     setMessage('');
     setErrors({});
     setStatus('idle');
@@ -57,7 +60,7 @@ export function Contact({ content }: { content: SiteContent }) {
     if (Object.keys(next).length) return;
 
     if (!SITE.web3formsKey) {
-      mailtoFallback(name, email, message);
+      mailtoFallback(name, email, reason, message);
       return;
     }
 
@@ -68,10 +71,11 @@ export function Contact({ content }: { content: SiteContent }) {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: SITE.web3formsKey,
-          subject: `${content.meta.siteName} — new message from ${name}`,
+          subject: `${content.meta.siteName} — ${reason} (${name})`,
           from_name: 'mateuscardosogs.com',
           name,
           email,
+          reason,
           message,
           replyto: email,
         }),
@@ -89,25 +93,19 @@ export function Contact({ content }: { content: SiteContent }) {
         <div>
           <SectionHeader index={t.index} eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
 
-          <div className="mc-contact__actions">
-            <Button variant="secondary" href={cvPath(content.lang)}>
-              {t.cvButton}
-            </Button>
-            <Button variant="ghost" href={SITE.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </Button>
-            <Button variant="ghost" href={SITE.github} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </Button>
-          </div>
-
-          <div className="mc-contact__direct">
-            <span className="eyebrow">{t.directLabel}</span>
-            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
-              {SITE.phoneDisplay}
+          <div className="mc-contact__links">
+            <a href={cvPdfPath(content.lang)} download>
+              {t.cvLink}
+            </a>
+            <a href={SITE.github} target="_blank" rel="noopener noreferrer">
+              {SITE.githubHandle}
+            </a>
+            <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer">
+              {SITE.linkedinHandle}
             </a>
           </div>
+
+          <p className="mc-contact__availability">{t.availability}</p>
         </div>
 
         <Card padding="lg">
@@ -127,7 +125,6 @@ export function Contact({ content }: { content: SiteContent }) {
                 label={t.formName}
                 name="name"
                 autoComplete="name"
-                placeholder={t.formNamePlaceholder}
                 value={name}
                 error={errors.name}
                 onChange={(e) => setName(e.target.value)}
@@ -142,11 +139,30 @@ export function Contact({ content }: { content: SiteContent }) {
                 error={errors.email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+
+              <div className="mc-field">
+                <label className="mc-field__label" htmlFor={reasonId}>
+                  {t.formReason}
+                </label>
+                <select
+                  id={reasonId}
+                  name="reason"
+                  className="mc-field__control"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                >
+                  {t.reasonOptions.map((o) => (
+                    <option key={o} value={o}>
+                      {o}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <Textarea
                 label={t.formMessage}
                 name="message"
                 rows={4}
-                placeholder={t.formMessagePlaceholder}
                 value={message}
                 error={errors.message}
                 onChange={(e) => setMessage(e.target.value)}

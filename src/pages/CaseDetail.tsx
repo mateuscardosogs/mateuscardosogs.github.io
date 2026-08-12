@@ -43,12 +43,6 @@ export function CaseDetail({ content, caseId }: { content: SiteContent; caseId: 
             <div className="mc-casedetail__block" key={key}>
               <span className="eyebrow">{key}</span>
               <p>{value}</p>
-              {/* Calibrated honesty: where the number is soft, the note says so. */}
-              {key === detail.outcome && item.caveat && (
-                <p className="mc-metric__note" style={{ marginTop: 'var(--space-4)' }}>
-                  {item.caveat}
-                </p>
-              )}
             </div>
           ))}
         </div>

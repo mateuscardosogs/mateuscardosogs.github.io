@@ -1,15 +1,17 @@
 # mateuscardosogs.com
 
-Personal site and CV of **Mateus Cardoso** — senior full-stack engineer, partner at
-Tracking Trade, founder of MCode Studio Labs.
+Personal site and CV of **Mateus Cardoso** — senior full-stack developer.
 
 Bilingual (English at the root, Portuguese under `/pt`), prerendered to static HTML,
 published to GitHub Pages on every push to `main`.
 
 The design comes from the **MCode Design System** project on Claude Design: tokens,
 components and copy rules are ported from there, and `src/styles/tokens.css` mirrors
-its token files verbatim. Content comes from that project's consolidated content base
-— no number or case on this site was invented.
+its token files verbatim.
+
+The **copy is authored separately from that project** — English is the original, and
+`src/content/pt.ts` is an adaptation of it rather than a literal translation. When the
+two drift, English wins. No number or case on this site was invented.
 
 ## Stack
 
