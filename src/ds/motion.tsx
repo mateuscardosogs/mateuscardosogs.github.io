@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState, type CSSProperties, type ReactNo
 import type { FlowNode } from '../content/types';
 import { isSoundOn, setSoundOn, sfx } from './soundKit';
 
+
 /* ── Reveal ──────────────────────────────────────────────────────────────────
    The system's only entrance: 12px rise + fade, 420ms expo-out, 60ms stagger.
    Server-rendered markup is visible; the client entry adds `html.js`, which is
@@ -184,7 +185,12 @@ export function FlowDiagram({
     <div className={`mc-flow${vertical ? ' mc-flow--vertical' : ''}`}>
       {nodes.map((n, i) => (
         <Fragment key={n.label}>
-          <div className={`mc-flow__node${n.accent ? ' mc-flow__node--accent' : ''}`}>
+          {/* Hovering the nodes in order plays the loop as a rising phrase —
+              the diagram becomes the instrument it is drawn as. */}
+          <div
+            className={`mc-flow__node${n.accent ? ' mc-flow__node--accent' : ''}`}
+            onMouseEnter={() => sfx.tick(i)}
+          >
             <div className="mc-flow__label">{n.label}</div>
             {n.sub && <div className="mc-flow__sub">{n.sub}</div>}
           </div>

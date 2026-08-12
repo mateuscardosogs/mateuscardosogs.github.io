@@ -1,4 +1,5 @@
-import { useId, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import { useId, type FocusEvent, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import { sfx } from './soundKit';
 
 interface FieldShell {
   label: string;
@@ -6,7 +7,13 @@ interface FieldShell {
   error?: string;
 }
 
-export function Input({ label, hint, error, ...rest }: FieldShell & InputHTMLAttributes<HTMLInputElement>) {
+export function Input({
+  label,
+  hint,
+  error,
+  onFocus,
+  ...rest
+}: FieldShell & InputHTMLAttributes<HTMLInputElement>) {
   const id = useId();
   const msg = error ?? hint;
   return (
@@ -19,6 +26,10 @@ export function Input({ label, hint, error, ...rest }: FieldShell & InputHTMLAtt
         className="mc-field__control"
         aria-invalid={error ? 'true' : undefined}
         aria-describedby={msg ? `${id}-msg` : undefined}
+        onFocus={(e: FocusEvent<HTMLInputElement>) => {
+          sfx.focus();
+          onFocus?.(e);
+        }}
         {...rest}
       />
       {msg && (
@@ -30,7 +41,14 @@ export function Input({ label, hint, error, ...rest }: FieldShell & InputHTMLAtt
   );
 }
 
-export function Textarea({ label, hint, error, rows = 4, ...rest }: FieldShell & TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function Textarea({
+  label,
+  hint,
+  error,
+  rows = 4,
+  onFocus,
+  ...rest
+}: FieldShell & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const id = useId();
   const msg = error ?? hint;
   return (
@@ -44,6 +62,10 @@ export function Textarea({ label, hint, error, rows = 4, ...rest }: FieldShell &
         className="mc-field__control"
         aria-invalid={error ? 'true' : undefined}
         aria-describedby={msg ? `${id}-msg` : undefined}
+        onFocus={(e: FocusEvent<HTMLTextAreaElement>) => {
+          sfx.focus();
+          onFocus?.(e);
+        }}
         {...rest}
       />
       {msg && (

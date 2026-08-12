@@ -4,6 +4,7 @@ import { Button } from '../ds/Button';
 import { Input, Textarea } from '../ds/fields';
 import { Card } from '../ds/layout';
 import { Section, SectionHeader } from '../ds/primitives';
+import { sfx } from '../ds/soundKit';
 import { cvPath } from '../routes';
 import { SITE, whatsappUrl } from '../site';
 
@@ -77,7 +78,10 @@ export function Contact({ content }: { content: SiteContent }) {
         }),
       });
       const data: { success?: boolean } = await res.json();
-      setStatus(res.ok && data.success ? 'sent' : 'error');
+      const ok = res.ok && data.success;
+      setStatus(ok ? 'sent' : 'error');
+      // Follows a click, so it never counts as sound playing on its own.
+      if (ok) sfx.confirm();
     } catch {
       setStatus('error');
     }
@@ -103,8 +107,15 @@ export function Contact({ content }: { content: SiteContent }) {
 
           <div className="mc-contact__direct">
             <span className="eyebrow">{t.directLabel}</span>
-            <a href={`mailto:${SITE.inboxEmail}`}>{SITE.inboxEmail}</a>
-            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <a href={`mailto:${SITE.inboxEmail}`} onMouseEnter={() => sfx.hover(0)}>
+              {SITE.inboxEmail}
+            </a>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => sfx.hover(1)}
+            >
               {SITE.phoneDisplay}
             </a>
           </div>

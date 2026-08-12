@@ -14,6 +14,7 @@ export function Cases({ content }: { content: SiteContent }) {
           <Reveal key={item.id} delay={i * 60}>
             <CaseCard
               item={item}
+              index={i}
               href={casePath(content.lang, item.id)}
               labels={cases.detail}
               readMore={cases.readMore}

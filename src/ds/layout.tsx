@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import type { Lang, SiteContent } from '../content/types';
 import { homePath } from '../routes';
 import { SoundToggle } from './motion';
+import { sfx } from './soundKit';
 
 /* ── Card ────────────────────────────────────────────────────────────────── */
 
@@ -26,10 +27,24 @@ export function Card({
 export function LangSwitch({ lang, alternates }: { lang: Lang; alternates: Record<Lang, string> }) {
   return (
     <div className="mc-lang">
-      <a href={alternates.en} hrefLang="en" aria-current={lang === 'en'} lang="en">
+      <a
+        href={alternates.en}
+        hrefLang="en"
+        aria-current={lang === 'en'}
+        lang="en"
+        onMouseEnter={() => sfx.hover(0)}
+        onClick={() => sfx.tick(0)}
+      >
         en
       </a>
-      <a href={alternates.pt} hrefLang="pt-BR" aria-current={lang === 'pt'} lang="pt-BR">
+      <a
+        href={alternates.pt}
+        hrefLang="pt-BR"
+        aria-current={lang === 'pt'}
+        lang="pt-BR"
+        onMouseEnter={() => sfx.hover(1)}
+        onClick={() => sfx.tick(1)}
+      >
         pt
       </a>
     </div>
@@ -82,12 +97,16 @@ export function NavBar({
 
   const nav = (
     <nav className="mc-navbar__nav" aria-label={content.nav.items.map((i) => i.label).join(', ')}>
-      {content.nav.items.map((it) => (
+      {/* The row walks up a pentatonic scale left to right, so sweeping the
+          cursor across the menu plays a phrase instead of one repeated blip. */}
+      {content.nav.items.map((it, i) => (
         <a
           key={it.id}
           className="mc-navbar__link"
           href={`${home}#${it.id}`}
           aria-current={active === it.id ? 'true' : undefined}
+          onMouseEnter={() => sfx.hover(i)}
+          onClick={() => sfx.tick(i)}
         >
           {it.label}
         </a>
@@ -120,10 +139,12 @@ export function Footer({ links }: { links: { label: string; href: string; extern
       <div className="mc-footer__row">
         <span className="mc-footer__name">Mateus Cardoso</span>
         <div className="mc-footer__links">
-          {links.map((l) => (
+          {links.map((l, i) => (
             <a
               key={l.label}
               href={l.href}
+              onMouseEnter={() => sfx.hover(i)}
+              onClick={() => sfx.tick(i)}
               {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {l.label}

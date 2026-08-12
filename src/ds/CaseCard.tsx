@@ -1,16 +1,20 @@
 import type { CaseItem } from '../content/types';
 import { TagList } from './primitives';
+import { sfx } from './soundKit';
 
 export function CaseCard({
   item,
   href,
   labels,
   readMore,
+  index = 0,
 }: {
   item: CaseItem;
   href: string;
   labels: { context: string; decision: string; tradeoff: string };
   readMore: string;
+  /** Position in the list — shifts the hover pitch so the cards differ. */
+  index?: number;
 }) {
   const rows: [string, string][] = [
     [labels.context, item.context],
@@ -19,7 +23,13 @@ export function CaseCard({
   ];
 
   return (
-    <a className="mc-case" href={href} aria-label={item.title}>
+    <a
+      className="mc-case"
+      href={href}
+      aria-label={item.title}
+      onMouseEnter={() => sfx.enter(index)}
+      onClick={() => sfx.press()}
+    >
       <div className="mc-case__top">
         <span className="mc-case__index">{item.index}</span>
         <span className="mc-case__result">{item.result}</span>
