@@ -1392,17 +1392,13 @@ html.js .mc-reveal.is-shown {
   margin-bottom: var(--space-6);
 }
 
-/* Centred column: heading in the middle, prose centred under it. */
-.mc-about {
-  text-align: center;
-}
-
+/* The column is centred on the page (Section width="narrow" does that);
+   the text inside it stays flush left. */
 .mc-about__body {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  max-width: 620px;
-  margin: var(--space-8) auto 0;
+  margin-top: var(--space-7);
 }
 
 .mc-about__body p {

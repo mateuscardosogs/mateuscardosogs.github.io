@@ -6,7 +6,7 @@ export function About({ content }: { content: SiteContent }) {
   return (
     <Section id="about" width="narrow">
       <div className="mc-about">
-        <SectionHeader index={about.index} eyebrow={about.eyebrow} title={about.title} align="center" />
+        <SectionHeader index={about.index} eyebrow={about.eyebrow} title={about.title} />
         <div className="mc-about__body">
           {about.paragraphs.map((p) => (
             <p key={p}>{p}</p>
