@@ -7,7 +7,7 @@ import { casePath } from '../routes';
 export function Cases({ content }: { content: SiteContent }) {
   const { cases } = content;
   return (
-    <Section id="cases" gridLines>
+    <Section id="cases">
       <SectionHeader index={cases.index} eyebrow={cases.eyebrow} title={cases.title} lead={cases.lead} />
       <div className="mc-stack">
         {cases.items.map((item, i) => (

@@ -5,7 +5,7 @@ import { homePath } from '../routes';
 
 export function NotFound({ content }: { content: SiteContent }) {
   return (
-    <Section gridLines>
+    <Section>
       <div className="mc-notfound">
         <span className="mc-notfound__code">404</span>
         <h1 className="mc-sechead__title">{content.notFound.title}</h1>

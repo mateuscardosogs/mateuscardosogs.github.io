@@ -46,7 +46,18 @@ export function Reveal({ delay = 0, children }: { delay?: number; children: Reac
    Ambient lattice of outlined squares and circles with slow drift, on canvas.
    Monochrome, never behind long-form text, static frame under reduced motion. */
 
-export function GeoField({ density = 9, speed = 0.7, opacity = 0.5 }: { density?: number; speed?: number; opacity?: number }) {
+export function GeoField({
+  density = 9,
+  speed = 1,
+  opacity = 0.5,
+  /** Drift radius in px. Large enough that the field reads as moving, not stalled. */
+  drift = 16,
+}: {
+  density?: number;
+  speed?: number;
+  opacity?: number;
+  drift?: number;
+}) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -85,16 +96,20 @@ export function GeoField({ density = 9, speed = 0.7, opacity = 0.5 }: { density?
 
       for (let i = 1; i <= cols; i++) {
         for (let j = 1; j <= rows; j++) {
-          const phase = t * 0.0006 * speed + (i * 0.7 + j * 1.3);
-          pts.push({ x: i * gx + Math.cos(phase) * 4, y: j * gy + Math.sin(phase * 0.8) * 4, a: phase });
+          const phase = t * 0.0012 * speed + (i * 0.7 + j * 1.3);
+          pts.push({
+            x: i * gx + Math.cos(phase) * drift,
+            y: j * gy + Math.sin(phase * 0.8) * drift,
+            a: phase,
+          });
         }
       }
 
       pts.forEach((p, k) => {
-        const s = 5 + (k % 3) * 3;
+        const s = 6 + (k % 3) * 4;
         ctx.save();
         ctx.translate(p.x, p.y);
-        ctx.rotate(p.a * 0.35);
+        ctx.rotate(p.a * 0.6);
         ctx.globalAlpha = opacity * 0.55;
         if (k % 4 === 0) {
           ctx.beginPath();
@@ -141,7 +156,7 @@ export function GeoField({ density = 9, speed = 0.7, opacity = 0.5 }: { density?
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [density, speed, opacity]);
+  }, [density, speed, opacity, drift]);
 
   return (
     <div className="mc-geofield" aria-hidden="true">

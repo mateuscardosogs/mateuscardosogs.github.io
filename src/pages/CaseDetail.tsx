@@ -23,7 +23,7 @@ export function CaseDetail({ content, caseId }: { content: SiteContent; caseId: 
   ];
 
   return (
-    <Section gridLines>
+    <Section>
       <Button variant="ghost" size="sm" href={`${homePath(content.lang)}#cases`}>
         {detail.back}
       </Button>

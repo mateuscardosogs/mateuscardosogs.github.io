@@ -211,11 +211,14 @@ button {
   margin: 0 auto;
 }
 
+/* The wordmark is set in caps: with no logo, the name in type is the mark,
+   and caps keep it reading as a mark rather than as a line of copy. */
 .mc-navbar__brand {
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-primary);
   border-bottom: none;
   white-space: nowrap;
@@ -317,6 +320,8 @@ button {
   font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .mc-footer__links {
@@ -951,16 +956,6 @@ a.mc-case:hover {
     box-shadow var(--dur-fast) var(--ease-out-quart);
 }
 
-select.mc-field__control {
-  appearance: none;
-  cursor: pointer;
-  padding-right: var(--space-8);
-  /* Hairline caret, drawn to match the system's stroke weight. */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7' fill='none' stroke='%238A9098' stroke-width='1.4'><path d='M1 1l4 4 4-4'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right var(--space-4) center;
-}
-
 textarea.mc-field__control {
   height: auto;
   padding: var(--space-4);
@@ -1158,7 +1153,9 @@ html.js .mc-reveal.is-shown {
 .mc-geofield {
   position: absolute;
   inset: 0;
-  opacity: 0.42;
+  /* The design system caps the field at 0.5 — sitting at the cap is what makes
+     the drift readable without the field competing with the headline. */
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -1417,27 +1414,27 @@ html.js .mc-reveal.is-shown {
   align-items: start;
 }
 
-.mc-contact__links {
+.mc-contact__actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-5);
-  margin-top: var(--space-8);
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+  flex-wrap: wrap;
 }
 
-.mc-contact__links a {
+.mc-contact__direct {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-hairline);
+}
+
+.mc-contact__direct a {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
-  padding-bottom: var(--space-2);
-}
-
-.mc-contact__availability {
-  margin-top: var(--space-7);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  color: var(--text-muted);
+  align-self: flex-start;
 }
 
 .mc-contact__form {

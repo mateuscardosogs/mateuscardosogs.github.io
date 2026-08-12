@@ -152,14 +152,14 @@ export interface SiteContent {
     eyebrow: string;
     title: string;
     lead: string;
-    cvLink: string;
-    availability: string;
+    cvButton: string;
+    directLabel: string;
     formName: string;
+    formNamePlaceholder: string;
     formEmail: string;
     formEmailPlaceholder: string;
-    formReason: string;
-    reasonOptions: string[];
     formMessage: string;
+    formMessagePlaceholder: string;
     submit: string;
     sending: string;
     sentLabel: string;
