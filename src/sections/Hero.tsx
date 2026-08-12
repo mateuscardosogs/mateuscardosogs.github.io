@@ -6,7 +6,7 @@ export function Hero({ content }: { content: SiteContent }) {
   const { hero } = content;
   return (
     <section className="mc-hero" id="hero">
-      <GeoField density={9} speed={1.25} drift={26} />
+      <GeoField density={9} speed={1.2} drift={12} />
       <div className="mc-hero__inner">
         <div className="mc-hero__eyebrow">
           <span className="mc-hero__mark" aria-hidden="true" />

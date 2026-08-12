@@ -69,14 +69,16 @@ export function SectionHeader({
   eyebrow,
   title,
   lead,
+  align = 'left',
 }: {
   index?: string;
   eyebrow?: string;
   title: string;
   lead?: string;
+  align?: 'left' | 'center';
 }) {
   return (
-    <header className="mc-sechead">
+    <header className={`mc-sechead${align === 'center' ? ' mc-sechead--center' : ''}`}>
       {(index || eyebrow) && (
         <div className="mc-sechead__meta">
           {index && <span className="mc-sechead__index">{index}</span>}

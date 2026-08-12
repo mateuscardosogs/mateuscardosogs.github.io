@@ -4,9 +4,9 @@ import { Section, SectionHeader, TimelineItem } from '../ds/primitives';
 export function About({ content }: { content: SiteContent }) {
   const { about } = content;
   return (
-    <Section id="about">
+    <Section id="about" width="narrow">
       <div className="mc-about">
-        <SectionHeader index={about.index} eyebrow={about.eyebrow} title={about.title} />
+        <SectionHeader index={about.index} eyebrow={about.eyebrow} title={about.title} align="center" />
         <div className="mc-about__body">
           {about.paragraphs.map((p) => (
             <p key={p}>{p}</p>

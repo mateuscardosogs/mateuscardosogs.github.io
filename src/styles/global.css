@@ -575,6 +575,20 @@ button {
   gap: var(--space-4);
 }
 
+.mc-sechead--center {
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.mc-sechead--center .mc-sechead__meta {
+  justify-content: center;
+}
+
+.mc-sechead--center .mc-sechead__lead {
+  margin-inline: auto;
+}
+
 .mc-sechead__index {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -1378,13 +1392,9 @@ html.js .mc-reveal.is-shown {
   margin-bottom: var(--space-6);
 }
 
-/* Heading on the left, prose on the right — the heading is a label for the
-   column, not a lead-in to it. */
+/* Centred column: heading in the middle, prose centred under it. */
 .mc-about {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: var(--space-10);
-  align-items: start;
+  text-align: center;
 }
 
 .mc-about__body {
@@ -1392,19 +1402,13 @@ html.js .mc-reveal.is-shown {
   flex-direction: column;
   gap: var(--space-6);
   max-width: 620px;
+  margin: var(--space-8) auto 0;
 }
 
 .mc-about__body p {
   font-size: var(--text-base);
   line-height: var(--leading-body);
   color: var(--text-secondary);
-}
-
-@media (max-width: 900px) {
-  .mc-about {
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
-  }
 }
 
 .mc-contact {

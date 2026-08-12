@@ -50,8 +50,9 @@ export function GeoField({
   density = 9,
   speed = 1,
   opacity = 0.5,
-  /** Drift radius in px. Large enough that the field reads as moving, not stalled. */
-  drift = 16,
+  /** Drift radius in px. Enough that the field reads as moving; past ~14 the
+   *  lattice starts to shear and the connecting lines look tangled. */
+  drift = 12,
 }: {
   density?: number;
   speed?: number;
@@ -96,7 +97,9 @@ export function GeoField({
 
       for (let i = 1; i <= cols; i++) {
         for (let j = 1; j <= rows; j++) {
-          const phase = t * 0.0012 * speed + (i * 0.7 + j * 1.3);
+          // Low spatial frequency on purpose: neighbours stay close to in
+          // phase, so the lattice glides as a whole instead of shearing.
+          const phase = t * 0.0011 * speed + (i * 0.3 + j * 0.42);
           pts.push({
             x: i * gx + Math.cos(phase) * drift,
             y: j * gy + Math.sin(phase * 0.8) * drift,
@@ -106,10 +109,10 @@ export function GeoField({
       }
 
       pts.forEach((p, k) => {
-        const s = 6 + (k % 3) * 4;
+        const s = 5 + (k % 3) * 3;
         ctx.save();
         ctx.translate(p.x, p.y);
-        ctx.rotate(p.a * 0.6);
+        ctx.rotate(p.a * 0.4);
         ctx.globalAlpha = opacity * 0.55;
         if (k % 4 === 0) {
           ctx.beginPath();
