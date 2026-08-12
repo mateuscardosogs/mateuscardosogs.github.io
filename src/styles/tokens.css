@@ -1,0 +1,190 @@
+/* MCode design system — tokens.
+   Mirrors `tokens/*.css` from the "MCode Design System" project on Claude Design.
+   Values are copied verbatim; do not tune them here without updating the source. */
+
+/* ── fonts ─────────────────────────────────────────────────────────────────
+   No brand font binaries exist. Closest Google Fonts matches, loaded from the
+   Google Fonts CDN. Replace with self-hosted @font-face if licensed originals
+   ever show up. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* ── colors: base neutrals (ink → paper) ── */
+  --ink-1000: #08090a;
+  --ink-900: #0f1113;
+  --ink-800: #17191c;
+  --ink-700: #232629;
+  --ink-600: #33373b;
+  --ink-500: #585d63;
+  --ink-400: #8a9098;
+  --ink-300: #b4b9bf;
+  --ink-200: #d6d9dc;
+  --ink-100: #e8eaec;
+  --ink-50: #f2f3f4;
+  --paper: #fafaf9;
+  --paper-pure: #ffffff;
+
+  /* ── signal: the single accent, used sparingly (max 5 places per page) ── */
+  --signal-600: #b8330f;
+  --signal-500: #e5431b;
+  --signal-400: #ff5a2a;
+  --signal-100: #ffe3da;
+  --signal-50: #fff1ec;
+
+  /* ── semantic status: muted, forms only ── */
+  --ok-500: #2e7d5b;
+  --warn-500: #a87400;
+  --err-500: #c0392b;
+
+  /* ── semantic aliases: light (default) ── */
+  --bg-page: var(--paper);
+  --bg-surface: var(--paper-pure);
+  --bg-sunken: var(--ink-50);
+  --bg-inverse: var(--ink-1000);
+  --text-primary: var(--ink-1000);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-400);
+  --text-inverse: var(--paper);
+  --text-signal: var(--signal-500);
+  --text-link: var(--ink-1000);
+  --border-hairline: var(--ink-200);
+  --border-strong: var(--ink-1000);
+  --border-subtle: var(--ink-100);
+  --surface-card: var(--paper-pure);
+  --surface-card-border: var(--ink-200);
+  --grid-line: rgba(8, 9, 10, 0.07);
+  --overlay-scrim: rgba(8, 9, 10, 0.72);
+  --focus-ring: var(--signal-500);
+
+  /* ── typography ── */
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 21px;
+  --text-xl: 26px;
+  --text-2xl: 33px;
+  --text-3xl: 42px;
+  --text-4xl: 54px;
+  --text-5xl: 68px;
+  --text-6xl: 88px;
+  --text-7xl: 116px;
+
+  --leading-tight: 0.98;
+  --leading-snug: 1.12;
+  --leading-heading: 1.2;
+  --leading-body: 1.55;
+  --leading-loose: 1.7;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-label: 0.12em;
+
+  /* ── spacing (4px base) ── */
+  --space-0: 0px;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 56px;
+  --space-10: 72px;
+  --space-11: 96px;
+  --space-12: 128px;
+  --space-13: 176px;
+
+  /* ── layout ── */
+  --layout-max: 1240px;
+  --layout-narrow: 720px;
+  --layout-gutter: 24px;
+  --layout-gutter-lg: 40px;
+  --grid-gap: 24px;
+  --section-y: var(--space-12);
+  --section-y-sm: var(--space-10);
+  --rule-width: 1px;
+  --nav-height: 64px;
+
+  /* ── shape: near-square, hairlines carry hierarchy ── */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  --shadow-none: none;
+  --shadow-raised: 0 1px 2px rgba(8, 9, 10, 0.06);
+  --shadow-float: 0 12px 32px -12px rgba(8, 9, 10, 0.22);
+  --blur-glass: 12px;
+
+  /* ── motion ── */
+  --dur-instant: 80ms;
+  --dur-fast: 160ms;
+  --dur-base: 260ms;
+  --dur-slow: 420ms;
+  --dur-slower: 720ms;
+  --dur-ambient: 14s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+  --ease-mech: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --stagger-step: 60ms;
+  --hover-lift: -2px;
+  --press-scale: 0.985;
+}
+
+/* Inverted bands redefine the same aliases. Max two per page. */
+.theme-dark {
+  --bg-page: var(--ink-1000);
+  --bg-surface: var(--ink-900);
+  --bg-sunken: var(--ink-800);
+  --bg-inverse: var(--paper);
+  --text-primary: var(--paper);
+  --text-secondary: var(--ink-300);
+  --text-muted: var(--ink-500);
+  --text-inverse: var(--ink-1000);
+  --text-signal: var(--signal-400);
+  --text-link: var(--paper);
+  --border-hairline: var(--ink-700);
+  --border-strong: var(--paper);
+  --border-subtle: var(--ink-800);
+  --surface-card: var(--ink-900);
+  --surface-card-border: var(--ink-700);
+  --grid-line: rgba(250, 250, 249, 0.08);
+  --overlay-scrim: rgba(8, 9, 10, 0.82);
+  --focus-ring: var(--signal-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --dur-slower: 0ms;
+    --dur-ambient: 0s;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --section-y: var(--space-10);
+    --layout-gutter: 20px;
+  }
+}
