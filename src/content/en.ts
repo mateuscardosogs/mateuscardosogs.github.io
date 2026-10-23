@@ -1,18 +1,22 @@
 import type { SiteContent } from './types';
 
 /**
- * English is the primary channel and the authored original — this copy is
- * transcribed from Mateus's own text sprint, not translated from Portuguese.
- * British spelling throughout (optimised, prioritisation, summarised).
+ * English is the primary channel and the authored original — the Portuguese
+ * copy is adapted from it, not the other way round. British spelling
+ * throughout (optimised, prioritisation, summarised).
+ *
+ * Every AI claim below maps to code that exists: the vision extraction, OCR +
+ * LLM pipeline and audit pass in the price-monitoring product, and the AI layer
+ * in Apex. Numbers are identical in both languages.
  */
 export const en: SiteContent = {
   lang: 'en',
   htmlLang: 'en',
 
   meta: {
-    title: 'Mateus Cardoso — Senior full-stack developer',
+    title: 'Mateus Cardoso — AI engineer & software engineer',
     description:
-      'Writing code stopped being the differentiator. What makes the difference is understanding the business behind it. 40k+ offers an hour across 100+ marketplaces, −30% in routing cost, −73% fewer support tickets.',
+      'AI engineer and software engineer. I build AI automations and integrations that hold up in production: vision extraction across 100+ marketplaces, an AI support pipeline that cut tickets by 73%, and AI coaching in a product of my own.',
     siteName: 'Mateus Cardoso',
   },
 
@@ -32,34 +36,39 @@ export const en: SiteContent = {
   },
 
   hero: {
-    eyebrow: 'Senior full-stack developer',
-    titleBefore: 'Writing code stopped being the differentiator. What makes the difference is ',
-    titleHighlight: 'understanding the business behind it',
+    eyebrow: 'AI engineer · Software engineer',
+    availability: 'Open to AI engineering roles · remote',
+    titleBefore: 'I build AI automations and integrations that ',
+    titleHighlight: 'hold up in production',
     titleAfter: '.',
-    lead: 'I look at a project from both sides: the business rule, the user, how the client reads the result. And I build it with an optimised workflow — process, structure and AI as part of it.',
+    lead: 'I connect LLMs to the systems a business already runs on — agents, vision extraction, structured output, background jobs — and treat every model call like the rest of the code: typed, validated, costed and reviewed.',
     ctaPrimary: 'Get in touch',
     ctaSecondary: 'See the cases',
     stack: [
-      'Ruby on Rails',
-      'NestJS',
-      'Hono',
-      'Next.js',
-      'React Native',
-      'Vite',
+      'TypeScript',
       'Python',
+      'Vercel AI SDK',
+      'Claude',
+      'OpenAI',
+      'Gemini',
+      'LiteLLM',
+      'Trigger.dev',
+      'NestJS',
       'PostgreSQL',
-      'Turborepo',
     ],
   },
 
   proof: {
     label: '01 / Quick proof',
     items: [
-      { value: '−73%', label: 'fewer support tickets after the AI pipeline I built' },
-      { value: '−30%', label: 'in travel cost across 70+ field routes after the routing work' },
+      { value: '−73%', label: 'fewer support tickets after the AI support pipeline I built' },
+      {
+        value: '158',
+        label: 'per-marketplace vision-extraction configs, drafted by Claude agents and checked by a test harness',
+      },
       { value: '40k+', label: 'offers monitored per hour across 100+ marketplaces' },
+      { value: '−30%', label: 'in travel cost across 70+ field routes after the routing work' },
       { value: '2,000+', label: 'paying users on a product I helped build' },
-      { value: '200', label: 'people on the waitlist of a product of my own, before any marketing' },
     ],
   },
 
@@ -82,8 +91,52 @@ export const en: SiteContent = {
     },
     items: [
       {
+        id: 'vision',
+        index: 'Case 01 · AI extraction',
+        result: '158 marketplace configs',
+        title: 'Reading prices straight from the screenshot with vision models, across 100+ marketplaces',
+        context:
+          "The price-monitoring product already stores a screenshot of every offer as evidence. Pulling title, price, instalments and seller out of each marketplace's HTML meant a different set of selectors per site, kept up to date by hand every time a layout changed.",
+        role: 'I created the vision-extraction bot and the AI audit pass, and built the pipeline that combines OCR with an LLM.',
+        decision:
+          'A browser bot captures the product page and Gemini Vision returns title, prices, instalments and seller as JSON, guided by a prompt config per marketplace. Instead of writing those configs by hand, a Claude agent per marketplace read two screenshots and drafted its config, and a test harness checked each one against Gemini. A second pipeline runs PaddleOCR first and has an LLM structure the text through LiteLLM, falling back to another model when validation fails. An audit pass re-reads prices and seller names from the screenshots and writes corrections back to the database.',
+        tradeoff:
+          'Every read now costs tokens and depends on a model provider, where a CSS selector cost nothing. I accepted that because a config is cheap to regenerate when a layout changes, and I kept the bill visible: flash-class models first, a fallback only on failed validation, and tokens and cost logged on every call.',
+        outcome:
+          '158 marketplace configs drafted by agents and validated by a harness, structured price data read from the same screenshot that proves it, and an audit loop that corrects the database instead of a person doing it.',
+        tags: ['Gemini Vision', 'LiteLLM', 'Claude agents', 'Structured output'],
+        flow: [
+          { label: 'screenshot' },
+          { label: 'vision LLM' },
+          { label: 'schema check', sub: 'fallback model' },
+          { label: 'audited price', accent: true },
+        ],
+      },
+      {
+        id: 'apex',
+        index: 'Case 02 · Apex · Product of my own',
+        result: '200 on the waitlist',
+        title: 'AI coaching that proposes the training plan, and only applies it once the athlete confirms',
+        context:
+          'Training apps are fragmented by sport. Apex plans running, gym, bike and swimming in one place, with AI that builds periodised training blocks and adapts them when life gets in the way. I train myself, so I am the user — which removes most of the ramp-up in understanding the domain.',
+        role: 'Everything: product, back end, front end, the AI layer, infrastructure and go-to-market.',
+        decision:
+          "The AI never writes straight to the athlete's plan. Generating a block, rescheduling a missed workout or adapting a session each comes back as a proposal, validated against a Zod schema with a fix-and-retry loop, and applied only after the user confirms. Brand, medical and nutrition guardrails are enforced in code, not just in the prompt. Behind it the provider is pluggable — Anthropic or OpenAI through the Vercel AI SDK — prompts are cached, each generation is costed and tracked in PostHog, usage is capped per plan, and 18+ background jobs run on Trigger.dev. The same layer drafts blog posts and Instagram copy, which a person publishes.",
+        tradeoff:
+          'Asking for confirmation adds a step for the user, and a validation layer is more code than a single prompt. I chose it because a training plan touches health: a wrong suggestion that applies itself costs more trust than one extra tap.',
+        outcome:
+          '~200 people on the interest list with no marketing spend, and an AI layer where every generation is validated, costed and tracked from day one.',
+        tags: ['Vercel AI SDK', 'Structured output', 'Trigger.dev', 'Guardrails'],
+        flow: [
+          { label: 'athlete context' },
+          { label: 'model' },
+          { label: 'schema + guardrails' },
+          { label: 'athlete confirms', accent: true },
+        ],
+      },
+      {
         id: 'scraping',
-        index: 'Case 01 · Price monitoring',
+        index: 'Case 03 · Price monitoring',
         result: '40k+ offers / hour',
         title: 'Collecting 40k offers an hour across 100+ marketplaces, with proof attached',
         context:
@@ -94,7 +147,7 @@ export const en: SiteContent = {
         tradeoff:
           'It costs more infrastructure and permanent maintenance of the anti-bot evasion. That is a cost I chose knowingly, because the window and the proof are what the client is actually buying.',
         outcome:
-          '40k+ offers monitored across 100+ marketplaces, complete inside the hourly window, with visual proof per offer.',
+          '40k+ offers monitored across 100+ marketplaces, complete inside the hourly window, with visual proof per offer — the same screenshots the AI extraction in case 01 reads from.',
         tags: ['Kubernetes', 'Anti-bot', 'Auditability'],
         flow: [
           { label: 'scheduler' },
@@ -105,7 +158,7 @@ export const en: SiteContent = {
       },
       {
         id: 'routing',
-        index: 'Case 02 · Field routing',
+        index: 'Case 04 · Field routing',
         result: '−30%',
         title: '−30% in travel cost across 70+ field routes',
         context:
@@ -124,68 +177,48 @@ export const en: SiteContent = {
           { label: 'feasible route', accent: true },
         ],
       },
-      {
-        id: 'apex',
-        index: 'Case 03 · Apex · Product of my own',
-        result: '200 on the waitlist',
-        title: 'A product built inside a domain I live in, with 200 people waiting before any marketing',
-        context:
-          'Training apps are fragmented by sport. Apex is my attempt to bring multi-sport training and AI coaching into one place. I train — running, strength, trail, conditioning — so I am the user, which removes most of the ramp-up in understanding the domain.',
-        role: 'Everything: product, back end, front end in Vite, AI orchestration with context optimisation, infrastructure and go-to-market.',
-        decision:
-          'Marketing is treated as part of the product: automated blog content with real sources, social output and an SEO structure built to rank. On the infrastructure side I leaned on managed services — Fly.io and Vercel for hosting, AWS workers, Trigger.dev for background jobs, Supabase for auth, Stripe for payments — so one person could carry the whole thing.',
-        tradeoff:
-          'The scope is large for one person, and leaning on automation means also maintaining those pipelines. In exchange I get to learn each of those services deeply, which comes back into the work I do for others.',
-        outcome: '~200 people on the interest list with no marketing spend. Launch is close.',
-        tags: ['Product of my own', 'AI', 'Vite'],
-        flow: [
-          { label: 'training' },
-          { label: 'athlete context' },
-          { label: 'AI coaching', accent: true },
-        ],
-      },
     ],
   },
 
   method: {
     index: '03',
     eyebrow: 'Method',
-    title: "The part of the work that isn't code",
-    lead: 'Building is the last step. Most of what determines whether a project works happens before and around it — and each principle below points at something I actually did.',
-    loopLabel: 'Verifiable AI loop',
+    title: 'How I put AI into production',
+    lead: 'A model call is the easy part. What makes it usable is everything around it — and each principle below points at something I actually built.',
+    loopLabel: 'One AI step, in production',
     loop: [
       { label: 'context' },
-      { label: 'plan' },
-      { label: 'verifiable units' },
-      { label: 'review', sub: 'final check is mine', accent: true },
+      { label: 'model' },
+      { label: 'schema check', sub: 'retry · fallback' },
+      { label: 'code decides', sub: 'the model only proposes', accent: true },
     ],
     principles: [
       {
         marker: '01',
-        title: 'AI as a process I can verify',
-        body: 'Context comes before the prompt, work is broken into units that can be checked, and review happens in a loop. Generated code follows the architecture and the standards agreed at the start, and documentation is the point of truth for the flow. The final review is mine.',
-        evidence:
-          'Support pipeline that cut tickets by 73%: user question → AI reads the context → checks the documentation → resolves it, or opens a ticket already summarised for me.',
+        title: 'The model proposes, code decides',
+        body: "An LLM output is a suggestion until something deterministic accepts it: a schema, a business rule, a guardrail in code, or the user's confirmation. Nothing a model says writes straight to production data.",
+        evidence: 'Apex: every plan change is a proposal, applied only after the athlete confirms —',
+        evidenceLink: { text: 'see case 02', caseId: 'apex' },
       },
       {
         marker: '02',
-        title: 'Talking to people who are not developers',
-        body: 'A technical decision only means something when it is translated into cost, deadline and risk. At one point the product was too complex for the sales team to present on its own, so I joined the calls as the person who explains it.',
-        evidence:
-          'Showing the flow in non-technical terms to leadership helped unlock large contracts with leading electronics and retail brands.',
+        title: 'Structured output, with a way back',
+        body: 'Every call returns typed data — Zod in TypeScript, Pydantic in Python — and a failure is expected, not exceptional: a correction retry, then a fallback model, then a clear error instead of a silent guess.',
+        evidence: 'PaddleOCR → LLM via LiteLLM → validation → fallback model —',
+        evidenceLink: { text: 'see case 01', caseId: 'vision' },
       },
       {
         marker: '03',
-        title: 'Architecture chosen by the constraint',
-        body: 'Scale, dependencies, cost and trade-off come before the stack. Knowing many tools is useful mostly because it makes the choice possible.',
-        evidence: 'OR-Tools on the routing VRPTW —',
-        evidenceLink: { text: 'see case 02', caseId: 'routing' },
+        title: 'Cost is a design constraint',
+        body: "Tokens are a line on someone's bill. I pick the cheapest model that passes validation, cache prompts, log cost per call and cap usage per plan, so the spend is known before it grows.",
+        evidence: 'Anthropic prompt caching · per-generation cost in PostHog · per-plan AI quotas · per-call cost in LiteLLM',
       },
       {
         marker: '04',
-        title: 'I run the infrastructure I design',
-        body: 'I like infrastructure and networking enough to keep my own self-hosted setup running. Operating it keeps my architectural decisions anchored in what actually has to be maintained.',
-        evidence: 'Proxmox · TrueNAS · UniFi · 10GbE · RAID 10 · Home Assistant · Arduino · UPS',
+        title: 'Agents in the workflow, the review stays mine',
+        body: 'I use agents for work that is wide and repetitive — Claude agents drafted 158 marketplace configs that a harness then checked. Context comes first, work is broken into units that can be verified, and documentation is the point of truth. The final check is mine.',
+        evidence:
+          'Support pipeline that cut tickets by 73%: user question → AI reads the context → checks the documentation → resolves it, or opens a ticket already summarised for me.',
       },
     ],
   },
@@ -195,10 +228,10 @@ export const en: SiteContent = {
     eyebrow: 'About',
     title: 'Context, not biography',
     paragraphs: [
-      'I am a senior full-stack developer. I joined my current company as an intern and moved through every level it has, which today means I am involved beyond development: product structuring, planning, prioritisation and conversations with clients and end users.',
-      'Alongside that work I build products of my own, always in areas I already know from the inside. Sport is the clearest example: I train, I study it, and Apex came out of using what I already understand as a practitioner to build something useful for other people.',
-      'I have been self-taught since I was a kid. I started studying quadcopters when there was nothing ready to buy, then networks, then servers — I built my own network and my own home server because I wanted to understand how they work, not because a job asked for it.',
-      'That habit keeps paying off in work that is not strictly development. Infrastructure is the clearest case: from the self-hosted setup at home to Fly.io, Vercel and AWS workers on my own projects, each thing I set up becomes something I can bring to the next problem.',
+      'I am an AI engineer and software engineer. I joined my current company as an intern and moved through every level it has, which today means I am involved beyond development: product structuring, planning, prioritisation and conversations with clients and end users — at one point joining sales calls as the person who explains the product to leadership.',
+      'Most of my work now is putting AI to work inside real operations: automations for tasks that used to depend on someone being available, integrations with the services a business already runs on, and pipelines that read, extract and decide with a model in the loop and code holding the final word.',
+      'Alongside that I build products of my own, always in areas I know from the inside. Sport is the clearest example: I train, I study it, and Apex came out of using what I understand as a practitioner to build AI coaching that is useful to other people.',
+      'I have been self-taught since I was a kid: quadcopters when there was nothing ready to buy, then networks, then servers. I still run my own self-hosted setup — Proxmox, TrueNAS, UniFi, 10GbE — because operating infrastructure keeps my architecture decisions anchored in what actually has to be maintained.',
     ],
   },
 
@@ -208,18 +241,18 @@ export const en: SiteContent = {
     title: 'Where the work happened',
     entries: [
       {
+        period: 'mar 2020 — now',
+        role: 'AI & software engineer',
+        org: 'Tracking Trade',
+        current: true,
+        body: 'I work across several products at once. On the AI side I built the vision bot that reads prices from screenshots, the OCR + LLM pipeline with model fallback, an AI audit pass that corrects the database, and the support pipeline that reads context and documentation before a ticket reaches a person. On the engineering side: price collection on Kubernetes, the field-routing solver, a monorepo for the services, and automation of the parts of the operation that used to depend on someone being available.',
+      },
+      {
         period: 'in parallel',
         role: 'Products of my own',
         org: 'Apex',
         current: true,
-        body: 'Apex is a multi-sport training product with AI coaching, built in a domain I practise myself. Carrying it alone meant learning the surrounding pieces properly: hosting on Fly.io and Vercel, workers on AWS, background jobs on Trigger.dev, Supabase for fast auth and Postgres, Stripe for payments, transactional email, and analytics to follow what people actually do. Each of those comes back into the work I do for clients.',
-      },
-      {
-        period: 'mar 2020 — now',
-        role: 'Software engineer',
-        org: 'Tracking Trade',
-        current: true,
-        body: 'I work across several products at once, which pushed a lot of structural work: consolidating services into a monorepo, standardising how new projects start, and automating parts of the operation that used to depend on someone being available. Price monitoring and field routing are the two largest pieces, and I also built the support pipeline that reads context and documentation before a ticket ever reaches a person.',
+        body: 'A multi-sport training product with AI coaching, built in a domain I practise myself. The AI layer runs on the Vercel AI SDK with Anthropic or OpenAI behind it: Zod-validated structured output, prompt caching, per-generation cost tracking and per-plan quotas, plus 18+ background jobs on Trigger.dev. Around it: Supabase for auth and Postgres, Stripe for subscriptions, Payload CMS, the Instagram Graph API and PostHog.',
       },
       {
         period: 'jul 2018 — feb 2020',
@@ -235,17 +268,26 @@ export const en: SiteContent = {
     ],
     columns: [
       {
+        label: 'AI engineering',
+        value:
+          'Vercel AI SDK · Claude · OpenAI · Gemini · LiteLLM · structured output (Zod, Pydantic) · vision and OCR extraction · prompt caching · evals · Claude Code',
+      },
+      {
+        label: 'Automation and integrations',
+        value: 'Trigger.dev · Stripe · Supabase · Instagram Graph API · Google APIs · PostHog · Selenium · Playwright',
+      },
+      {
+        label: 'Back end and data',
+        value: 'TypeScript · Python · NestJS · Hono · Ruby on Rails · PostgreSQL · Redis',
+      },
+      {
         label: 'Product and web',
         value: 'Next.js · React · React Native · Expo · Vite · tRPC · Drizzle',
       },
       {
-        label: 'Back end and data',
-        value: 'Ruby on Rails · NestJS · Hono · Python · PostgreSQL · Supabase · Trigger.dev',
-      },
-      {
-        label: 'Infrastructure and services',
+        label: 'Infrastructure',
         value:
-          'Kubernetes · Fly.io · Vercel · AWS · Google Cloud · Stripe · self-hosted: Proxmox, TrueNAS, UniFi',
+          'Kubernetes · Fly.io · Vercel · AWS · Google Cloud · Railway · self-hosted: Proxmox, TrueNAS, UniFi',
       },
       {
         label: 'Education',
@@ -259,7 +301,7 @@ export const en: SiteContent = {
     index: '06',
     eyebrow: 'Contact',
     title: 'Two paths, zero friction',
-    lead: 'If you are hiring for a project, tell me the business problem. If you are recruiting, the CV carries the same numbers as this page.',
+    lead: 'If you are hiring an AI or software engineer, the CV carries the same numbers as this page. If you have a process that should run on its own, tell me what it is.',
     cvButton: 'Read the CV',
     directLabel: 'Or go direct',
     formName: 'Name',
@@ -267,7 +309,7 @@ export const en: SiteContent = {
     formEmail: 'Email',
     formEmailPlaceholder: 'you@company.com',
     formMessage: 'Context',
-    formMessagePlaceholder: 'What business problem do you need solved?',
+    formMessagePlaceholder: 'What do you want to automate or build?',
     submit: 'Send',
     sending: 'Sending…',
     sentLabel: 'Received',
@@ -291,22 +333,24 @@ export const en: SiteContent = {
 
   cv: {
     title: 'Mateus Cardoso — CV',
-    description: 'One-column, ATS-safe CV of Mateus Cardoso, senior full-stack developer.',
-    role: 'Senior full-stack developer',
+    description: 'One-column, ATS-safe CV of Mateus Cardoso, AI engineer and software engineer.',
+    role: 'AI engineer · Software engineer',
     location: 'Recife, Brazil · remote (BR / EU / US)',
     summaryLabel: 'Summary',
     summary:
-      'Senior full-stack developer. Writing code stopped being the differentiator; what makes the difference is understanding the business behind it. I look at a project from both sides — the business rule, the user, how the client reads the result — and I build it with an optimised workflow, with process, structure and AI as part of it. I also run products of my own, and the infrastructure behind them.',
+      'AI engineer and software engineer with 8+ years building production software. I put LLMs to work inside real products and operations — vision extraction, agents, structured output, background AI jobs and integrations — and treat each model call like the rest of the code: typed, validated, costed and reviewed. I also run products of my own, and the infrastructure behind them.',
     experienceLabel: 'Experience',
     jobs: [
       {
-        role: 'Software engineer',
+        role: 'AI & software engineer',
         org: 'Tracking Trade',
         period: 'mar 2020 — now',
         bullets: [
+          'Built the AI support pipeline that reads context and documentation before a ticket reaches a person, cutting support tickets by 73%.',
+          'Created a vision-extraction bot that reads title, prices, instalments and seller from product-page screenshots with Gemini Vision into JSON; its 158 per-marketplace prompt configs were drafted by Claude agents and validated by a test harness.',
+          'Built an OCR + LLM extraction pipeline (PaddleOCR, LiteLLM) with schema validation, model fallback and per-call token and cost logging, plus an AI audit pass that re-checks prices and sellers from screenshots and writes corrections back to the database.',
           'Designed and run price collection of 40k+ offers per hour across 100+ marketplaces on 150+ Kubernetes pods, with anti-bot evasion and a screenshot stored as evidence per collection.',
           'Modelled field routing for 70+ routes as a VRPTW on Google OR-Tools, with penalties, visit priority by coordinate and real capacity limits — 30% reduction in real travel cost.',
-          'Built the AI support pipeline that reads context and documentation before a ticket reaches a person, cutting tickets by 73%.',
           'Consolidated services into a monorepo and standardised how new projects start, automating parts of the operation that depended on someone being available.',
           'Joined sales calls as the person who explains the product in non-technical terms, which helped unlock large contracts with leading electronics and retail brands.',
         ],
@@ -316,9 +360,10 @@ export const en: SiteContent = {
         org: 'In parallel',
         period: 'in parallel',
         bullets: [
-          'Multi-sport training product with AI coaching, carried end to end: product, back end, front end in Vite, AI orchestration with context optimisation, infrastructure and go-to-market.',
-          'Marketing treated as part of the product: automated blog content with real sources, social output and an SEO structure built to rank.',
-          'Managed services chosen so one person could carry it: Fly.io and Vercel for hosting, AWS workers, Trigger.dev for background jobs, Supabase for auth and Postgres, Stripe for payments.',
+          'Multi-sport training product with AI coaching, carried end to end: product, back end, front end, AI layer, infrastructure and go-to-market.',
+          'AI layer on the Vercel AI SDK with pluggable Anthropic and OpenAI providers: Zod-validated structured output with a fix-and-retry loop, guardrails enforced in code, and plan changes applied only after the user confirms.',
+          'Prompt caching, per-generation cost tracking in PostHog and per-plan AI quotas; 18+ background jobs on Trigger.dev, including AI drafts of blog and Instagram content that a person publishes.',
+          'Integrations: Supabase auth and Postgres, Stripe subscriptions and webhooks, Payload CMS, Instagram Graph API; hosted on Fly.io and Vercel with AWS workers.',
           '~200 people on the waitlist with no marketing spend.',
         ],
       },
@@ -339,15 +384,24 @@ export const en: SiteContent = {
     ],
     skillsLabel: 'Skills',
     skills: [
-      { label: 'Product and web', value: 'Next.js, React, React Native, Expo, Vite, tRPC, Drizzle' },
+      {
+        label: 'AI engineering',
+        value:
+          'Vercel AI SDK, Anthropic Claude, OpenAI, Gemini, LiteLLM, structured output (Zod, Pydantic), vision and OCR extraction, prompt caching, evals, Claude Code',
+      },
+      {
+        label: 'Automation and integrations',
+        value: 'Trigger.dev, Stripe, Supabase, Instagram Graph API, Google APIs, PostHog, Selenium, Playwright',
+      },
       {
         label: 'Back end and data',
-        value: 'Ruby on Rails, NestJS, Hono, Python, PostgreSQL, Supabase, Trigger.dev',
+        value: 'TypeScript, Python, NestJS, Hono, Ruby on Rails, PostgreSQL, Redis',
       },
+      { label: 'Product and web', value: 'Next.js, React, React Native, Expo, Vite, tRPC, Drizzle' },
       {
         label: 'Infrastructure',
         value:
-          'Kubernetes, Fly.io, Vercel, AWS, Google Cloud, Stripe, self-hosted: Proxmox, TrueNAS, UniFi',
+          'Kubernetes, Fly.io, Vercel, AWS, Google Cloud, Railway, self-hosted: Proxmox, TrueNAS, UniFi',
       },
     ],
     educationLabel: 'Education',

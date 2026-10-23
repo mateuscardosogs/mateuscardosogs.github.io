@@ -1,6 +1,6 @@
 # mateuscardosogs.com
 
-Personal site and CV of **Mateus Cardoso** — senior full-stack developer.
+Personal site and CV of **Mateus Cardoso** — AI engineer and software engineer.
 
 Bilingual (English at the root, Portuguese under `/pt`), prerendered to static HTML,
 published to GitHub Pages on every push to `main`.
@@ -47,7 +47,7 @@ needs a browser.
 | URL | |
 | --- | --- |
 | `/` · `/pt/` | Home: hero → proof → cases → method → about → experience → contact |
-| `/cases/{scraping,routing,apex}/` (+ `/pt/…`) | Full case: context → role → decision → trade-off → outcome |
+| `/cases/{vision,apex,scraping,routing}/` (+ `/pt/…`) | Full case: context → role → decision → trade-off → outcome |
 | `/cv/` · `/pt/cv/` | One-column, ATS-safe CV, with a PDF next to it |
 | `/404.html` | Fallback GitHub Pages serves for unknown paths |
 

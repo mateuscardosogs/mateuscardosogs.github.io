@@ -10,9 +10,9 @@ export const pt: SiteContent = {
   htmlLang: 'pt-BR',
 
   meta: {
-    title: 'Mateus Cardoso — Desenvolvedor full-stack sênior',
+    title: 'Mateus Cardoso — Engenheiro de IA e engenheiro de software',
     description:
-      'Escrever código deixou de ser o diferencial. O que faz diferença é entender o negócio por trás. 40 mil+ ofertas por hora em 100+ marketplaces, −30% de custo de deslocamento, −73% de chamados de suporte.',
+      'Engenheiro de IA e engenheiro de software. Construo automações e integrações com IA que se sustentam em produção: extração por visão em 100+ marketplaces, um pipeline de suporte com IA que cortou 73% dos chamados e coaching por IA num produto próprio.',
     siteName: 'Mateus Cardoso',
   },
 
@@ -32,23 +32,25 @@ export const pt: SiteContent = {
   },
 
   hero: {
-    eyebrow: 'Desenvolvedor full-stack sênior',
-    titleBefore: 'Escrever código deixou de ser o diferencial. O que faz diferença é ',
-    titleHighlight: 'entender o negócio por trás',
+    eyebrow: 'Engenheiro de IA · Engenheiro de software',
+    availability: 'Aberto a vagas de engenharia de IA · remoto',
+    titleBefore: 'Construo automações e integrações com IA que ',
+    titleHighlight: 'se sustentam em produção',
     titleAfter: '.',
-    lead: 'Olho o projeto dos dois lados: a regra de negócio, o usuário, como o cliente lê o resultado. E construo com um fluxo otimizado — processo, estrutura e IA como parte dele.',
+    lead: 'Conecto LLMs aos sistemas que o negócio já usa — agentes, extração por visão, saída estruturada, jobs em background — e trato cada chamada de modelo como o resto do código: tipada, validada, com custo medido e revisada.',
     ctaPrimary: 'Falar comigo',
     ctaSecondary: 'Ver os cases',
     stack: [
-      'Ruby on Rails',
-      'NestJS',
-      'Hono',
-      'Next.js',
-      'React Native',
-      'Vite',
+      'TypeScript',
       'Python',
+      'Vercel AI SDK',
+      'Claude',
+      'OpenAI',
+      'Gemini',
+      'LiteLLM',
+      'Trigger.dev',
+      'NestJS',
       'PostgreSQL',
-      'Turborepo',
     ],
   },
 
@@ -56,10 +58,13 @@ export const pt: SiteContent = {
     label: '01 / Prova rápida',
     items: [
       { value: '−73%', label: 'de chamados de suporte depois do pipeline de IA que construí' },
-      { value: '−30%', label: 'de custo de deslocamento em 70+ rotas de campo depois da roteirização' },
+      {
+        value: '158',
+        label: 'configs de extração por visão, uma por marketplace, rascunhadas por agentes Claude e checadas por um harness de teste',
+      },
       { value: '40 mil+', label: 'ofertas monitoradas por hora em 100+ marketplaces' },
+      { value: '−30%', label: 'de custo de deslocamento em 70+ rotas de campo depois da roteirização' },
       { value: '2.000+', label: 'usuários pagantes num produto que ajudei a construir' },
-      { value: '200', label: 'pessoas na lista de espera de um produto meu, antes de qualquer marketing' },
     ],
   },
 
@@ -82,8 +87,52 @@ export const pt: SiteContent = {
     },
     items: [
       {
+        id: 'vision',
+        index: 'Case 01 · Extração com IA',
+        result: '158 configs de marketplace',
+        title: 'Lendo preços direto do screenshot com modelos de visão, em 100+ marketplaces',
+        context:
+          'O produto de monitoramento de preços já guarda um screenshot de cada oferta como evidência. Tirar título, preço, parcelamento e vendedor do HTML de cada marketplace exigia um conjunto de seletores por site, atualizado na mão toda vez que um layout mudava.',
+        role: 'Criei o bot de extração por visão e a auditoria com IA, e construí o pipeline que combina OCR com LLM.',
+        decision:
+          'Um bot de navegador captura a página do produto e o Gemini Vision devolve título, preços, parcelamento e vendedor em JSON, guiado por uma config de prompt por marketplace. Em vez de escrever essas configs na mão, um agente Claude por marketplace leu dois screenshots e rascunhou a config, e um harness de teste checou cada uma contra o Gemini. Um segundo pipeline roda PaddleOCR primeiro e usa um LLM via LiteLLM pra estruturar o texto, caindo pra outro modelo quando a validação falha. Uma auditoria relê preços e vendedores a partir dos screenshots e grava as correções de volta no banco.',
+        tradeoff:
+          'Cada leitura agora custa tokens e depende de um provedor de modelo, onde um seletor CSS não custava nada. Assumi isso porque regenerar uma config quando o layout muda é barato, e mantive a conta visível: modelos da linha flash primeiro, fallback só quando a validação falha, e tokens e custo registrados em toda chamada.',
+        outcome:
+          '158 configs de marketplace rascunhadas por agentes e validadas por harness, dado de preço estruturado lido do mesmo screenshot que serve de prova, e um loop de auditoria que corrige o banco no lugar de uma pessoa.',
+        tags: ['Gemini Vision', 'LiteLLM', 'Agentes Claude', 'Saída estruturada'],
+        flow: [
+          { label: 'screenshot' },
+          { label: 'LLM de visão' },
+          { label: 'checagem de schema', sub: 'modelo de fallback' },
+          { label: 'preço auditado', accent: true },
+        ],
+      },
+      {
+        id: 'apex',
+        index: 'Case 02 · Apex · Produto próprio',
+        result: '200 na lista de espera',
+        title: 'Coaching por IA que propõe o plano de treino e só aplica depois que o atleta confirma',
+        context:
+          'Apps de treino são fragmentados por esporte. O Apex planeja corrida, musculação, bike e natação num lugar só, com IA que monta blocos de treino periodizados e adapta quando a vida atrapalha. Eu treino, então sou o usuário — o que elimina quase toda a rampa de entender o domínio.',
+        role: 'Tudo: produto, back-end, front-end, a camada de IA, infraestrutura e go-to-market.',
+        decision:
+          'A IA nunca escreve direto no plano do atleta. Gerar um bloco, remarcar um treino perdido ou adaptar uma sessão volta como proposta, validada contra um schema Zod com um loop de correção, e só é aplicada depois que o usuário confirma. Guardrails de marca, saúde e nutrição são checados no código, não só no prompt. Por trás, o provedor é plugável — Anthropic ou OpenAI via Vercel AI SDK —, os prompts usam cache, cada geração tem custo medido e rastreado no PostHog, o uso tem limite por plano, e 18+ jobs em background rodam no Trigger.dev. A mesma camada rascunha posts de blog e textos de Instagram, que uma pessoa publica.',
+        tradeoff:
+          'Pedir confirmação adiciona um passo pro usuário, e uma camada de validação é mais código que um prompt solto. Escolhi assim porque plano de treino mexe com saúde: uma sugestão errada que se aplica sozinha custa mais confiança do que um toque a mais.',
+        outcome:
+          '~200 pessoas na lista de interesse sem nenhum gasto de marketing, e uma camada de IA em que toda geração é validada, tem custo medido e é rastreada desde o primeiro dia.',
+        tags: ['Vercel AI SDK', 'Saída estruturada', 'Trigger.dev', 'Guardrails'],
+        flow: [
+          { label: 'contexto do atleta' },
+          { label: 'modelo' },
+          { label: 'schema + guardrails' },
+          { label: 'atleta confirma', accent: true },
+        ],
+      },
+      {
         id: 'scraping',
-        index: 'Case 01 · Monitoramento de preços',
+        index: 'Case 03 · Monitoramento de preços',
         result: '40 mil+ ofertas / hora',
         title: 'Coleta de 40 mil ofertas por hora em 100+ marketplaces, com comprovação anexada',
         context:
@@ -94,7 +143,7 @@ export const pt: SiteContent = {
         tradeoff:
           'Custa mais infraestrutura e manutenção permanente da evasão anti-bot. É um custo que escolhi com consciência, porque a janela e a comprovação são o que o cliente está de fato comprando.',
         outcome:
-          '40 mil+ ofertas monitoradas em 100+ marketplaces, completas dentro da janela horária, com prova visual por oferta.',
+          '40 mil+ ofertas monitoradas em 100+ marketplaces, completas dentro da janela horária, com prova visual por oferta — os mesmos screenshots que a extração com IA do case 01 lê.',
         tags: ['Kubernetes', 'Anti-bot', 'Auditabilidade'],
         flow: [
           { label: 'agendador' },
@@ -105,7 +154,7 @@ export const pt: SiteContent = {
       },
       {
         id: 'routing',
-        index: 'Case 02 · Roteirização de campo',
+        index: 'Case 04 · Roteirização de campo',
         result: '−30%',
         title: '−30% no custo de deslocamento de 70+ rotas de campo',
         context:
@@ -124,69 +173,48 @@ export const pt: SiteContent = {
           { label: 'rota viável', accent: true },
         ],
       },
-      {
-        id: 'apex',
-        index: 'Case 03 · Apex · Produto próprio',
-        result: '200 na lista de espera',
-        title:
-          'Um produto construído dentro de um domínio que eu vivo, com 200 pessoas esperando antes de qualquer marketing',
-        context:
-          'Apps de treino são fragmentados por esporte. O Apex é minha tentativa de trazer treino multiesporte e coaching por IA pra um lugar só. Eu treino — corrida, musculação, trilha, condicionamento — então sou o usuário, o que elimina quase toda a rampa de entender o domínio.',
-        role: 'Tudo: produto, back-end, front-end em Vite, orquestração de IA com otimização de contexto, infraestrutura e go-to-market.',
-        decision:
-          'Marketing é tratado como parte do produto: conteúdo de blog automatizado com fontes reais, saída pras redes e uma estrutura de SEO feita pra ranquear. Do lado da infraestrutura me apoiei em serviços gerenciados — Fly.io e Vercel pra hospedagem, workers na AWS, Trigger.dev pra jobs em background, Supabase pra auth, Stripe pra pagamento — pra uma pessoa só conseguir carregar tudo.',
-        tradeoff:
-          'O escopo é grande pra uma pessoa, e apoiar em automação significa também manter esses pipelines. Em troca, aprendo cada um desses serviços a fundo, e isso volta pro trabalho que faço pros outros.',
-        outcome: '~200 pessoas na lista de interesse sem nenhum gasto de marketing. O launch está perto.',
-        tags: ['Produto próprio', 'IA', 'Vite'],
-        flow: [
-          { label: 'treino' },
-          { label: 'contexto do atleta' },
-          { label: 'coaching IA', accent: true },
-        ],
-      },
     ],
   },
 
   method: {
     index: '03',
     eyebrow: 'Método',
-    title: 'A parte do trabalho que não é código',
-    lead: 'Construir é a última etapa. A maior parte do que determina se um projeto funciona acontece antes e ao redor dela — e cada princípio abaixo aponta pra algo que eu fiz de verdade.',
-    loopLabel: 'Loop de IA verificável',
+    title: 'Como coloco IA em produção',
+    lead: 'Chamar o modelo é a parte fácil. O que torna o resultado usável é tudo ao redor — e cada princípio abaixo aponta pra algo que eu construí de verdade.',
+    loopLabel: 'Um passo de IA, em produção',
     loop: [
       { label: 'contexto' },
-      { label: 'plano' },
-      { label: 'unidades verificáveis' },
-      { label: 'review', sub: 'o check final é meu', accent: true },
+      { label: 'modelo' },
+      { label: 'checagem de schema', sub: 'retry · fallback' },
+      { label: 'o código decide', sub: 'o modelo só propõe', accent: true },
     ],
     principles: [
       {
         marker: '01',
-        title: 'IA como processo que eu verifico',
-        body: 'O contexto vem antes do prompt, o trabalho é quebrado em unidades que dá pra checar, e o review acontece em loop. Código gerado segue a arquitetura e os padrões combinados no início, e a documentação é o ponto de verdade do fluxo. O review final é meu.',
-        evidence:
-          'Pipeline de suporte que cortou 73% dos chamados: dúvida do usuário → IA lê o contexto → consulta a documentação → resolve, ou abre um ticket já resumido pra mim.',
+        title: 'O modelo propõe, o código decide',
+        body: 'A saída de um LLM é sugestão até algo determinístico aceitar: um schema, uma regra de negócio, um guardrail no código ou a confirmação do usuário. Nada que o modelo diz grava direto em dado de produção.',
+        evidence: 'Apex: toda mudança no plano é uma proposta, aplicada só depois que o atleta confirma —',
+        evidenceLink: { text: 'ver o case 02', caseId: 'apex' },
       },
       {
         marker: '02',
-        title: 'Falar com quem não é desenvolvedor',
-        body: 'Uma decisão técnica só significa alguma coisa quando é traduzida em custo, prazo e risco. Em certo momento o produto estava complexo demais pro time de vendas apresentar sozinho, então entrei nas calls como a pessoa que explica.',
-        evidence:
-          'Mostrar o fluxo em termos não técnicos pra diretoria ajudou a destravar grandes contratos com marcas líderes de eletrônicos e varejo.',
+        title: 'Saída estruturada, com caminho de volta',
+        body: 'Toda chamada devolve dado tipado — Zod no TypeScript, Pydantic no Python — e falha é esperada, não exceção: um retry de correção, depois um modelo de fallback, depois um erro claro em vez de um chute silencioso.',
+        evidence: 'PaddleOCR → LLM via LiteLLM → validação → modelo de fallback —',
+        evidenceLink: { text: 'ver o case 01', caseId: 'vision' },
       },
       {
         marker: '03',
-        title: 'Arquitetura escolhida pela restrição',
-        body: 'Escala, dependências, custo e trade-off vêm antes da stack. Conhecer muitas ferramentas serve principalmente porque é o que torna a escolha possível.',
-        evidence: 'OR-Tools no VRPTW da roteirização —',
-        evidenceLink: { text: 'ver o case 02', caseId: 'routing' },
+        title: 'Custo é restrição de projeto',
+        body: 'Token é uma linha na conta de alguém. Escolho o modelo mais barato que passa na validação, uso cache de prompt, registro custo por chamada e limito uso por plano, pra o gasto ser conhecido antes de crescer.',
+        evidence: 'Prompt caching da Anthropic · custo por geração no PostHog · cota de IA por plano · custo por chamada no LiteLLM',
       },
       {
         marker: '04',
-        title: 'Eu opero a infraestrutura que desenho',
-        body: 'Gosto de infraestrutura e rede o bastante pra manter meu próprio setup self-hosted rodando. Operar isso mantém minhas decisões de arquitetura ancoradas no que de fato precisa ser mantido.',
-        evidence: 'Proxmox · TrueNAS · UniFi · 10GbE · RAID 10 · Home Assistant · Arduino · UPS',
+        title: 'Agentes no fluxo, o review continua meu',
+        body: 'Uso agentes pro trabalho que é largo e repetitivo — agentes Claude rascunharam 158 configs de marketplace que um harness depois checou. O contexto vem primeiro, o trabalho é quebrado em unidades verificáveis e a documentação é o ponto de verdade. O check final é meu.',
+        evidence:
+          'Pipeline de suporte que cortou 73% dos chamados: dúvida do usuário → IA lê o contexto → consulta a documentação → resolve, ou abre um ticket já resumido pra mim.',
       },
     ],
   },
@@ -196,10 +224,10 @@ export const pt: SiteContent = {
     eyebrow: 'Sobre',
     title: 'Contexto, não biografia',
     paragraphs: [
-      'Sou desenvolvedor full-stack sênior. Entrei na empresa onde estou hoje como estagiário e passei por todos os níveis que ela tem, o que hoje significa estar envolvido além do desenvolvimento: estruturação de produto, planejamento, priorização e conversa com clientes e usuários finais.',
-      'Em paralelo construo produtos próprios, sempre em áreas que eu já conheço por dentro. Esporte é o exemplo mais claro: eu treino, estudo o assunto, e o Apex saiu de usar o que eu já entendo como praticante pra construir algo útil pras outras pessoas.',
-      'Sou autodidata desde criança. Comecei estudando quadricópteros quando não existia nada pronto pra comprar, depois redes, depois servidores — montei minha própria rede e meu próprio servidor de casa porque queria entender como funcionam, não porque algum trabalho pediu.',
-      'Esse hábito continua se pagando em trabalho que não é estritamente desenvolvimento. Infraestrutura é o caso mais claro: do setup self-hosted em casa até Fly.io, Vercel e workers na AWS nos meus projetos, cada coisa que eu monto vira algo que consigo levar pro próximo problema.',
+      'Sou engenheiro de IA e engenheiro de software. Entrei na empresa onde estou hoje como estagiário e passei por todos os níveis que ela tem, o que hoje significa estar envolvido além do desenvolvimento: estruturação de produto, planejamento, priorização e conversa com clientes e usuários finais — em certo momento, entrando nas calls de venda como quem explica o produto pra diretoria.',
+      'A maior parte do meu trabalho hoje é colocar IA pra trabalhar dentro da operação real: automações pra tarefas que dependiam de alguém estar disponível, integrações com os serviços que o negócio já usa, e pipelines que leem, extraem e decidem com um modelo no meio e o código dando a palavra final.',
+      'Em paralelo construo produtos próprios, sempre em áreas que eu conheço por dentro. Esporte é o exemplo mais claro: eu treino, estudo o assunto, e o Apex saiu de usar o que entendo como praticante pra construir um coaching por IA útil pras outras pessoas.',
+      'Sou autodidata desde criança: quadricópteros quando não existia nada pronto pra comprar, depois redes, depois servidores. Ainda mantenho meu próprio setup self-hosted — Proxmox, TrueNAS, UniFi, 10GbE — porque operar infraestrutura mantém minhas decisões de arquitetura ancoradas no que de fato precisa ser mantido.',
     ],
   },
 
@@ -209,18 +237,18 @@ export const pt: SiteContent = {
     title: 'Onde o trabalho aconteceu',
     entries: [
       {
+        period: 'mar 2020 — hoje',
+        role: 'Engenheiro de IA e de software',
+        org: 'Tracking Trade',
+        current: true,
+        body: 'Trabalho em vários produtos ao mesmo tempo. Do lado de IA, construí o bot de visão que lê preços a partir de screenshots, o pipeline de OCR + LLM com fallback de modelo, uma auditoria com IA que corrige o banco e o pipeline de suporte que lê contexto e documentação antes de um ticket chegar numa pessoa. Do lado de engenharia: a coleta de preços no Kubernetes, o solver de roteirização de campo, um monorepo pros serviços e a automação das partes da operação que dependiam de alguém estar disponível.',
+      },
+      {
         period: 'em paralelo',
         role: 'Produtos próprios',
         org: 'Apex',
         current: true,
-        body: 'O Apex é um produto de treino multiesporte com coaching por IA, construído num domínio que eu pratico. Tocar sozinho significou aprender direito as peças ao redor: hospedagem na Fly.io e na Vercel, workers na AWS, jobs em background no Trigger.dev, Supabase pra auth rápida e Postgres, Stripe pra pagamento, e-mail transacional e analytics pra acompanhar o que as pessoas fazem de verdade. Cada uma dessas coisas volta pro trabalho que faço pros clientes.',
-      },
-      {
-        period: 'mar 2020 — hoje',
-        role: 'Engenheiro de software',
-        org: 'Tracking Trade',
-        current: true,
-        body: 'Trabalho em vários produtos ao mesmo tempo, o que empurrou bastante trabalho estrutural: consolidar serviços num monorepo, padronizar como projetos novos começam e automatizar partes da operação que dependiam de alguém estar disponível. Monitoramento de preços e roteirização de campo são as duas maiores peças, e também construí o pipeline de suporte que lê contexto e documentação antes de um ticket chegar numa pessoa.',
+        body: 'Um produto de treino multiesporte com coaching por IA, construído num domínio que eu pratico. A camada de IA roda no Vercel AI SDK com Anthropic ou OpenAI por trás: saída estruturada validada com Zod, cache de prompt, custo rastreado por geração e cota por plano, além de 18+ jobs em background no Trigger.dev. Ao redor: Supabase pra auth e Postgres, Stripe pra assinatura, Payload CMS, a Instagram Graph API e PostHog.',
       },
       {
         period: 'jul 2018 — fev 2020',
@@ -236,17 +264,26 @@ export const pt: SiteContent = {
     ],
     columns: [
       {
+        label: 'Engenharia de IA',
+        value:
+          'Vercel AI SDK · Claude · OpenAI · Gemini · LiteLLM · saída estruturada (Zod, Pydantic) · extração por visão e OCR · prompt caching · evals · Claude Code',
+      },
+      {
+        label: 'Automação e integrações',
+        value: 'Trigger.dev · Stripe · Supabase · Instagram Graph API · Google APIs · PostHog · Selenium · Playwright',
+      },
+      {
+        label: 'Back-end e dados',
+        value: 'TypeScript · Python · NestJS · Hono · Ruby on Rails · PostgreSQL · Redis',
+      },
+      {
         label: 'Produto e web',
         value: 'Next.js · React · React Native · Expo · Vite · tRPC · Drizzle',
       },
       {
-        label: 'Back-end e dados',
-        value: 'Ruby on Rails · NestJS · Hono · Python · PostgreSQL · Supabase · Trigger.dev',
-      },
-      {
-        label: 'Infraestrutura e serviços',
+        label: 'Infraestrutura',
         value:
-          'Kubernetes · Fly.io · Vercel · AWS · Google Cloud · Stripe · self-hosted: Proxmox, TrueNAS, UniFi',
+          'Kubernetes · Fly.io · Vercel · AWS · Google Cloud · Railway · self-hosted: Proxmox, TrueNAS, UniFi',
       },
       {
         label: 'Formação',
@@ -260,7 +297,7 @@ export const pt: SiteContent = {
     index: '06',
     eyebrow: 'Contato',
     title: 'Dois caminhos, fricção zero',
-    lead: 'Se você contrata projeto, me conte o problema de negócio. Se você recruta, o currículo tem os mesmos números desta página.',
+    lead: 'Se você está contratando engenheiro de IA ou de software, o currículo tem os mesmos números desta página. Se você tem um processo que deveria rodar sozinho, me conte qual é.',
     cvButton: 'Ver o currículo',
     directLabel: 'Ou vá direto',
     formName: 'Nome',
@@ -268,7 +305,7 @@ export const pt: SiteContent = {
     formEmail: 'E-mail',
     formEmailPlaceholder: 'voce@empresa.com',
     formMessage: 'Contexto',
-    formMessagePlaceholder: 'Que problema de negócio você precisa resolver?',
+    formMessagePlaceholder: 'O que você quer automatizar ou construir?',
     submit: 'Enviar',
     sending: 'Enviando…',
     sentLabel: 'Recebido',
@@ -293,22 +330,24 @@ export const pt: SiteContent = {
   cv: {
     title: 'Mateus Cardoso — Currículo',
     description:
-      'Currículo em uma coluna, ATS-safe, de Mateus Cardoso, desenvolvedor full-stack sênior.',
-    role: 'Desenvolvedor full-stack sênior',
+      'Currículo em uma coluna, ATS-safe, de Mateus Cardoso, engenheiro de IA e engenheiro de software.',
+    role: 'Engenheiro de IA · Engenheiro de software',
     location: 'Recife, PE · remoto (BR / EU / US)',
     summaryLabel: 'Resumo',
     summary:
-      'Desenvolvedor full-stack sênior. Escrever código deixou de ser o diferencial; o que faz diferença é entender o negócio por trás. Olho o projeto dos dois lados — a regra de negócio, o usuário, como o cliente lê o resultado — e construo com um fluxo otimizado, com processo, estrutura e IA como parte dele. Também toco produtos próprios, e a infraestrutura por trás deles.',
+      'Engenheiro de IA e engenheiro de software, com 8+ anos construindo software em produção. Coloco LLMs pra trabalhar dentro de produtos e operações reais — extração por visão, agentes, saída estruturada, jobs de IA em background e integrações — e trato cada chamada de modelo como o resto do código: tipada, validada, com custo medido e revisada. Também toco produtos próprios, e a infraestrutura por trás deles.',
     experienceLabel: 'Experiência',
     jobs: [
       {
-        role: 'Engenheiro de software',
+        role: 'Engenheiro de IA e de software',
         org: 'Tracking Trade',
         period: 'mar 2020 — hoje',
         bullets: [
+          'Construí o pipeline de suporte com IA que lê contexto e documentação antes de um ticket chegar numa pessoa, cortando 73% dos chamados.',
+          'Criei um bot de extração por visão que lê título, preços, parcelamento e vendedor de screenshots de página de produto com Gemini Vision, em JSON; as 158 configs de prompt por marketplace foram rascunhadas por agentes Claude e validadas por um harness de teste.',
+          'Construí um pipeline de extração OCR + LLM (PaddleOCR, LiteLLM) com validação de schema, fallback de modelo e registro de tokens e custo por chamada, além de uma auditoria com IA que reconfere preços e vendedores a partir dos screenshots e grava as correções no banco.',
           'Desenhei e opero a coleta de 40 mil+ ofertas por hora em 100+ marketplaces com 150+ pods no Kubernetes, com evasão anti-bot e um screenshot guardado como evidência por coleta.',
           'Modelei a roteirização de 70+ rotas de campo como VRPTW no Google OR-Tools, com penalidades, prioridade de visita por coordenada e limites reais de capacidade — 30% de redução no custo real de deslocamento.',
-          'Construí o pipeline de suporte com IA que lê contexto e documentação antes de um ticket chegar numa pessoa, cortando 73% dos chamados.',
           'Consolidei serviços num monorepo e padronizei como projetos novos começam, automatizando partes da operação que dependiam de alguém estar disponível.',
           'Entrei nas calls de venda como a pessoa que explica o produto em termos não técnicos, o que ajudou a destravar grandes contratos com marcas líderes de eletrônicos e varejo.',
         ],
@@ -318,9 +357,10 @@ export const pt: SiteContent = {
         org: 'Em paralelo',
         period: 'em paralelo',
         bullets: [
-          'Produto de treino multiesporte com coaching por IA, tocado de ponta a ponta: produto, back-end, front-end em Vite, orquestração de IA com otimização de contexto, infraestrutura e go-to-market.',
-          'Marketing tratado como parte do produto: conteúdo de blog automatizado com fontes reais, saída pras redes e estrutura de SEO feita pra ranquear.',
-          'Serviços gerenciados escolhidos pra uma pessoa conseguir carregar: Fly.io e Vercel pra hospedagem, workers na AWS, Trigger.dev pra jobs em background, Supabase pra auth e Postgres, Stripe pra pagamento.',
+          'Produto de treino multiesporte com coaching por IA, tocado de ponta a ponta: produto, back-end, front-end, camada de IA, infraestrutura e go-to-market.',
+          'Camada de IA no Vercel AI SDK com provedores Anthropic e OpenAI plugáveis: saída estruturada validada com Zod e loop de correção, guardrails checados no código, e mudanças no plano aplicadas só depois que o usuário confirma.',
+          'Prompt caching, custo por geração rastreado no PostHog e cota de IA por plano; 18+ jobs em background no Trigger.dev, incluindo rascunhos de blog e Instagram gerados por IA que uma pessoa publica.',
+          'Integrações: Supabase pra auth e Postgres, Stripe pra assinaturas e webhooks, Payload CMS, Instagram Graph API; hospedagem na Fly.io e na Vercel com workers na AWS.',
           '~200 pessoas na lista de espera sem nenhum gasto de marketing.',
         ],
       },
@@ -341,15 +381,24 @@ export const pt: SiteContent = {
     ],
     skillsLabel: 'Competências',
     skills: [
-      { label: 'Produto e web', value: 'Next.js, React, React Native, Expo, Vite, tRPC, Drizzle' },
+      {
+        label: 'Engenharia de IA',
+        value:
+          'Vercel AI SDK, Anthropic Claude, OpenAI, Gemini, LiteLLM, saída estruturada (Zod, Pydantic), extração por visão e OCR, prompt caching, evals, Claude Code',
+      },
+      {
+        label: 'Automação e integrações',
+        value: 'Trigger.dev, Stripe, Supabase, Instagram Graph API, Google APIs, PostHog, Selenium, Playwright',
+      },
       {
         label: 'Back-end e dados',
-        value: 'Ruby on Rails, NestJS, Hono, Python, PostgreSQL, Supabase, Trigger.dev',
+        value: 'TypeScript, Python, NestJS, Hono, Ruby on Rails, PostgreSQL, Redis',
       },
+      { label: 'Produto e web', value: 'Next.js, React, React Native, Expo, Vite, tRPC, Drizzle' },
       {
         label: 'Infraestrutura',
         value:
-          'Kubernetes, Fly.io, Vercel, AWS, Google Cloud, Stripe, self-hosted: Proxmox, TrueNAS, UniFi',
+          'Kubernetes, Fly.io, Vercel, AWS, Google Cloud, Railway, self-hosted: Proxmox, TrueNAS, UniFi',
       },
     ],
     educationLabel: 'Formação',

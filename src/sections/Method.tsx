@@ -14,7 +14,7 @@ export function Method({ content }: { content: SiteContent }) {
         <FlowDiagram nodes={method.loop} />
       </div>
 
-      <div>
+      <div className="mc-method__principles">
         {method.principles.map((p, i) => (
           <Reveal key={p.marker} delay={i * 60}>
             <PrincipleBlock

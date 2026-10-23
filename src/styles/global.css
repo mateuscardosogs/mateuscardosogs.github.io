@@ -902,9 +902,10 @@ a.mc-case:hover {
   margin-top: var(--space-8);
 }
 
+/* Six groups: three per row on desktop, so they read as two even rows. */
 .mc-columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--space-8);
   margin-top: var(--space-9);
 }
@@ -1295,9 +1296,62 @@ html.js .mc-reveal.is-shown {
 
 .mc-hero__eyebrow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-4);
   margin-bottom: var(--space-7);
+}
+
+/* Availability badge: the one line a recruiter needs before reading anything
+   else. Same mono voice as the eyebrow, but boxed and in primary ink. */
+.mc-hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: var(--space-3);
+  padding: 5px 10px;
+  border: 1px solid var(--border-hairline);
+  background: var(--surface-card);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-primary);
+}
+
+.mc-hero__status-dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--signal-500);
+  flex: none;
+}
+
+.mc-hero__status-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: mc-status-pulse 2.4s var(--ease-out-expo) infinite;
+}
+
+@keyframes mc-status-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-hero__status-dot::after {
+    animation: none;
+  }
 }
 
 .mc-hero__mark {
@@ -1352,6 +1406,10 @@ html.js .mc-reveal.is-shown {
     min-height: 0;
   }
 
+  .mc-hero__status {
+    margin-left: 0;
+  }
+
   .mc-hero__inner {
     padding-block: var(--space-10);
   }
@@ -1392,6 +1450,25 @@ html.js .mc-reveal.is-shown {
 
 .mc-method__loop-label {
   margin-bottom: var(--space-6);
+}
+
+/* Two columns on wide screens: in one column the 640px text left the right
+   half of the dark section empty. */
+@media (min-width: 960px) {
+  .mc-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mc-method__principles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-9);
+  }
+
+  .mc-method__principles .mc-principle {
+    height: 100%;
+    grid-template-columns: 40px 1fr;
+  }
 }
 
 /* The column is centred on the page (Section width="narrow" does that);

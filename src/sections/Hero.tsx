@@ -11,6 +11,10 @@ export function Hero({ content }: { content: SiteContent }) {
         <div className="mc-hero__eyebrow">
           <span className="mc-hero__mark" aria-hidden="true" />
           <span className="eyebrow">{hero.eyebrow}</span>
+          <span className="mc-hero__status">
+            <span className="mc-hero__status-dot" aria-hidden="true" />
+            {hero.availability}
+          </span>
         </div>
 
         <h1 className="mc-hero__title">

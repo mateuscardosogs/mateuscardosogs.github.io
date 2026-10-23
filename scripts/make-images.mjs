@@ -57,13 +57,13 @@ const og = `<!doctype html><html><head><meta charset="utf-8"><link rel="styleshe
 </style></head><body>
 <div class="grid"></div>
 <div class="pad">
-  <div class="eyebrow"><span class="mark"></span>Mateus Cardoso · Senior full-stack engineer</div>
-  <h1>I'm not hired to write code. I'm hired to decide <em>what to build</em> and why.</h1>
+  <div class="eyebrow"><span class="mark"></span>Mateus Cardoso · AI engineer &amp; software engineer</div>
+  <h1>I build AI automations and integrations that <em>hold up in production</em>.</h1>
   <div class="foot">
     <div class="nums">
-      <div class="num"><b>40k+</b><span>offers / hour</span></div>
-      <div class="num"><b>&minus;30%</b><span>routing cost</span></div>
       <div class="num"><b>&minus;73%</b><span>support tickets</span></div>
+      <div class="num"><b>158</b><span>AI extraction configs</span></div>
+      <div class="num"><b>40k+</b><span>offers / hour</span></div>
     </div>
     <div class="who">mateuscardosogs.com<br>MCode Studio Labs</div>
   </div>

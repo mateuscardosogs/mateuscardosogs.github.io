@@ -92,6 +92,8 @@ export interface SiteContent {
   };
   hero: {
     eyebrow: string;
+    /** Short status badge next to the eyebrow — what kind of work I'm open to. */
+    availability: string;
     titleBefore: string;
     titleHighlight: string;
     titleAfter: string;
